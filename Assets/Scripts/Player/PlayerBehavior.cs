@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,11 +24,27 @@ public class PlayerBehavior : MonoBehaviour
     private Transform playerTransform;
     private bool isWalking = false;
 
-    [SerializeField] private float acceleration = 12f;
-    [SerializeField] private float deceleration = 16f;
+    [SerializeField]
+    private float acceleration = 12f;
+    [SerializeField]
+    private float deceleration = 16f;
 
     private Vector3 currentVelocity;
 
+    [SerializeField]
+    private EventIndex _jumpEvent;
+
+    [Header("Jumping")]
+
+    [SerializeField]
+    private float raycast_Dist = .5f;
+    [SerializeField, Tooltip("Layer for Ground")]
+    private LayerMask groundLayerMask;
+    [SerializeField]
+    private bool is_grounded;
+    [SerializeField, Tooltip("Jump Force")]
+    private float jump_Force = 5f;
+    private Rigidbody Rigidbody;
 
 
     #endregion
@@ -37,6 +55,17 @@ public class PlayerBehavior : MonoBehaviour
     private void Awake()
     {
         playerTransform = transform;
+        EventBus.Subscribe<bool>(_jumpEvent, PlayerJump);
+        Rigidbody = GetComponent<Rigidbody>();
+
+    }
+
+    private void PlayerJump(bool obj)
+    {
+        if (this.is_grounded)
+        {
+            this.Rigidbody.AddForce(Vector3.up * this.jump_Force, ForceMode.Impulse);
+        }
     }
 
     // Called before the first frame update.
@@ -90,6 +119,22 @@ public class PlayerBehavior : MonoBehaviour
         playerTransform.position += currentVelocity * Time.fixedDeltaTime;
 
         isWalking = currentVelocity.magnitude > 0.1f;
+
+
+        Vector3 raycastSpawn = new Vector3(transform.position.x, transform.position.y + .25f, transform.position.z);
+
+        RaycastHit ground_hit;
+        Debug.DrawRay(raycastSpawn, Vector3.down * this.raycast_Dist, Color.green);
+        if (Physics.Raycast(raycastSpawn, Vector3.down, out ground_hit, this.raycast_Dist, groundLayerMask))
+        {
+            Debug.Log("Player is above a valid ground layer");
+
+            this.is_grounded = true;
+        }
+        else
+        {
+            this.is_grounded = false;
+        }
     }
 
 

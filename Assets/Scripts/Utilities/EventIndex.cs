@@ -13,4 +13,5 @@ public enum EventIndex
     Dash,
     Sprint,
     Interact,
+    OpenMenu,
 }
