@@ -14,4 +14,5 @@ public enum EventIndex
     Sprint,
     Interact,
     OpenMenu,
+    OpenInventory,
 }

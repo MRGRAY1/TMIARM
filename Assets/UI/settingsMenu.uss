@@ -1,0 +1,26 @@
+:root {
+}
+
+.button {
+    font-size: 100px;
+    border-top-left-radius: 53px;
+    border-top-right-radius: 53px;
+    border-bottom-right-radius: 53px;
+    border-bottom-left-radius: 53px;
+    padding-top: 14px;
+    padding-right: 14px;
+    padding-bottom: 14px;
+    padding-left: 14px;
+    margin-top: 64px;
+    margin-right: 64px;
+    margin-bottom: 64px;
+    margin-left: 64px;
+}
+
+.label {
+    font-size: 150px;
+}
+
+.button:hover {
+    scale: 1.1 1;
+}

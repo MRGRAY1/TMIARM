@@ -16,8 +16,10 @@ public class InputManager : MonoBehaviour
     private EventIndex _jumpEvent;
     [SerializeField]
     private EventIndex _interactEvent;
+    [SerializeField]
+    private EventIndex _inventoryEvent;
 
-
+    private bool IsMenuOpen;
 
     private void Awake()
     {
@@ -25,22 +27,42 @@ public class InputManager : MonoBehaviour
         player_Inputs.Main.Menu.performed += MenuEvent;
         player_Inputs.Main.Jump.started += JumpEvent;
         player_Inputs.Main.Interaction.started += InteractionEvent;
+        player_Inputs.Main.Inventory.started += InventoryEvent;
+
+
+    }
+
+    private void InventoryEvent(InputAction.CallbackContext context)
+    {
+        GameEvents.OpenInventory?.Invoke();
 
     }
 
     private void InteractionEvent(InputAction.CallbackContext context)
     {
-        EventBus.Publish<bool>(_interactEvent, true);
+        GameEvents.Interact?.Invoke();
     }
 
     private void JumpEvent(InputAction.CallbackContext context)
     {
-        EventBus.Publish<bool>(_jumpEvent, true);
+        GameEvents.Jump?.Invoke();
     }
 
     private void MenuEvent(InputAction.CallbackContext context)
     {
-        EventBus.Publish<bool>(_menuEvent, true);
+        if (!IsMenuOpen)
+        {
+            player_Inputs.Main.Disable();
+            //player_Inputs.UI.Enable();
+        }
+        else
+        {
+            player_Inputs.Main.Enable();
+            //player_Inputs.UI.Disable();
+        }
+        IsMenuOpen = !IsMenuOpen;
+        GameEvents.OpenMenu?.Invoke();
+
     }
 
     public Vector2 GetMovementVectorNormalized()

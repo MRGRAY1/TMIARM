@@ -19,10 +19,13 @@ public class PlayerBehavior : MonoBehaviour
     private InputManager playerInput;
     [SerializeField]
     private float moveSpeed = 7.0f;
-    [SerializeField]
-    private float rotateSpeed = 10.0f;
+    //[SerializeField]
+    //private float rotateSpeed = 10.0f;
     private Transform playerTransform;
     private bool isWalking = false;
+    [SerializeField]
+    private GameObject _playCamera;
+    public float camRayCastDist = 3f;
 
     [SerializeField]
     private float acceleration = 12f;
@@ -31,20 +34,17 @@ public class PlayerBehavior : MonoBehaviour
 
     private Vector3 currentVelocity;
 
-    [SerializeField]
-    private EventIndex _jumpEvent;
-
     [Header("Jumping")]
 
     [SerializeField]
-    private float raycast_Dist = .5f;
+    private float groundRaycast_Dist = .5f;
     [SerializeField, Tooltip("Layer for Ground")]
     private LayerMask groundLayerMask;
     [SerializeField]
     private bool is_grounded;
     [SerializeField, Tooltip("Jump Force")]
     private float jump_Force = 5f;
-    private Rigidbody Rigidbody;
+    private Rigidbody rb;
 
 
     #endregion
@@ -55,17 +55,34 @@ public class PlayerBehavior : MonoBehaviour
     private void Awake()
     {
         playerTransform = transform;
-        EventBus.Subscribe<bool>(_jumpEvent, PlayerJump);
-        Rigidbody = GetComponent<Rigidbody>();
-
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true; // prevents tipping over
+        GameEvents.Jump += PlayerJump;
+        GameEvents.Interact += InteractWithObject;
     }
 
-    private void PlayerJump(bool obj)
+    private void PlayerJump()
     {
         if (this.is_grounded)
         {
-            this.Rigidbody.AddForce(Vector3.up * this.jump_Force, ForceMode.Impulse);
+            this.rb.AddForce(Vector3.up * this.jump_Force, ForceMode.Impulse);
         }
+    }
+
+    private void InteractWithObject()
+    {
+        RaycastHit hit;
+        Logger.Log("Key Pressed");
+        if (Physics.Raycast(_playCamera.transform.position, _playCamera.transform.forward, out hit, camRayCastDist))
+        {
+            Logger.Log("Collider Hit");
+            if (hit.collider.TryGetComponent<IInteractable>(out var interactable))
+            {
+                Logger.Log("Object Hit");
+                interactable.Interact();
+            }
+        }
+
     }
 
     // Called before the first frame update.
@@ -86,20 +103,22 @@ public class PlayerBehavior : MonoBehaviour
     // Unsubscribe from events or clean up.
     private void OnDisable()
     {
-
+        GameEvents.Jump -= PlayerJump;
+        GameEvents.Interact -= InteractWithObject;
     }
 
     // Called once per frame.
     // Handle per-frame logic such as input or movement.
     private void Update()
     {
-
+        Debug.DrawRay(_playCamera.transform.position, _playCamera.transform.forward * camRayCastDist, Color.red);
     }
 
     public bool IsWalking()
     {
         return isWalking;
     }
+
     private void FixedUpdate()
     {
         Vector2 inputVector = playerInput.GetMovementVectorNormalized();
@@ -107,28 +126,26 @@ public class PlayerBehavior : MonoBehaviour
         Vector3 forward = playerTransform.forward;
         Vector3 right = playerTransform.right;
 
-        Vector3 targetDirection = (forward * inputVector.y + right * inputVector.x);
-        targetDirection.y = 0f;
+        Vector3 moveDir = (forward * inputVector.y + right * inputVector.x);
+        moveDir.y = 0f;
 
-        Vector3 targetVelocity = targetDirection.normalized * moveSpeed;
+        Vector3 targetVelocity = moveDir.normalized * moveSpeed;
 
-        float accel = (targetDirection.magnitude > 0.01f) ? acceleration : deceleration;
+        float accelRate = (moveDir.magnitude > 0.01f) ? acceleration : deceleration;
 
-        currentVelocity = Vector3.Lerp(currentVelocity, targetVelocity, accel * Time.fixedDeltaTime);
+        currentVelocity = Vector3.Lerp(currentVelocity, targetVelocity, accelRate * Time.fixedDeltaTime);
 
-        playerTransform.position += currentVelocity * Time.fixedDeltaTime;
+        rb.MovePosition(rb.position + currentVelocity * Time.fixedDeltaTime);
 
         isWalking = currentVelocity.magnitude > 0.1f;
 
 
         Vector3 raycastSpawn = new Vector3(transform.position.x, transform.position.y + .25f, transform.position.z);
-
         RaycastHit ground_hit;
-        Debug.DrawRay(raycastSpawn, Vector3.down * this.raycast_Dist, Color.green);
-        if (Physics.Raycast(raycastSpawn, Vector3.down, out ground_hit, this.raycast_Dist, groundLayerMask))
-        {
-            Debug.Log("Player is above a valid ground layer");
+        Debug.DrawRay(raycastSpawn, Vector3.down * this.groundRaycast_Dist, Color.green);
 
+        if (Physics.Raycast(raycastSpawn, Vector3.down, out ground_hit, this.groundRaycast_Dist, groundLayerMask))
+        {
             this.is_grounded = true;
         }
         else
@@ -136,7 +153,6 @@ public class PlayerBehavior : MonoBehaviour
             this.is_grounded = false;
         }
     }
-
 
     #endregion
 }

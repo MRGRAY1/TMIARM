@@ -1,0 +1,11 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainMenu.uss?fileID=7433441132597879392&amp;guid=b4f7a1217a2006841a3a865974b6ad20&amp;type=3#MainMenu" />
+    <ui:VisualElement class="Container" style="flex-grow: 1; background-color: rgb(52, 117, 132);">
+        <ui:Label text="Trust Me&#10;I&apos;m a Repairman" class="label" />
+    </ui:VisualElement>
+    <ui:VisualElement picking-mode="Ignore" class="Container" style="flex-grow: 1.53; background-color: rgb(52, 117, 132); align-self: auto; align-items: center; flex-direction: row; justify-content: flex-start; align-content: auto;">
+        <ui:Button text="Play Game" name="PlayGameButton" class="button" />
+        <ui:Button text="Settings" name="SettingsButton" class="button" />
+        <ui:Button text="Exit" name="ExitButton" class="button" />
+    </ui:VisualElement>
+</ui:UXML>

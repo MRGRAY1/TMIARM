@@ -3,15 +3,20 @@ using UnityEngine;
 public class MouseLook : MonoBehaviour
 {
     [Header("Sensitivity")]
-    [SerializeField, Tooltip("Mouse X sensitivity (yaw)")] private float xSensitivity = 1.5f;
-    [SerializeField, Tooltip("Mouse Y sensitivity (pitch)")] private float ySensitivity = 1.5f;
+    [SerializeField, Tooltip("Mouse X sensitivity (yaw)")]
+    private float xSensitivity = 1.5f;
+    [SerializeField, Tooltip("Mouse Y sensitivity (pitch)")]
+    private float ySensitivity = 1.5f;
 
     [Header("References")]
-    [SerializeField, Tooltip("Transform of the camera for pitch rotation")] private Transform cameraTransform;
+    [SerializeField, Tooltip("Transform of the camera for pitch rotation")]
+    private Transform cameraTransform;
 
     [Header("Smoothing")]
-    [SerializeField, Tooltip("Enable smooth camera movement")] private bool enableSmoothing = true;
-    [SerializeField, Tooltip("Speed at which smoothing interpolates towards target rotation. Higher = snappier")] private float smoothSpeed = 10f;
+    //[SerializeField, Tooltip("Enable smooth camera movement")]
+    //private bool enableSmoothing = true;
+    [SerializeField, Tooltip("Speed at which smoothing interpolates towards target rotation. Higher = snappier")]
+    private float smoothSpeed = 10f;
 
 
     private PlayerInputSystem playerInputs;
