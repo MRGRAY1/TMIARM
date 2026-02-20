@@ -44,6 +44,7 @@ public class SceneSelectorDebug : EditorWindow
     {
         root.Q<Button>("MainMenu_btn").clicked += LoadMainMenuScene;
         root.Q<Button>("GameScene_btn").clicked += LoadGameScene;
+        root.Q<Button>("BootStrapper_Btn").clicked += LoadBootStrapperScene;
     }
 
     private void LoadGameScene()
@@ -56,6 +57,12 @@ public class SceneSelectorDebug : EditorWindow
     private void LoadMainMenuScene()
     {
         sceneName = "MainMenu";
+        SaveScene();
+        LoadScene(sceneName);
+    }
+    private void LoadBootStrapperScene()
+    {
+        sceneName = "BootStrapper";
         SaveScene();
         LoadScene(sceneName);
     }

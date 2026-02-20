@@ -4,6 +4,7 @@
         <ui:VisualElement style="flex-grow: 0; align-items: center; justify-content: flex-end; align-self: stretch; flex-direction: column-reverse; height: 575px;">
             <ui:Button text="Game Scene" name="GameScene_btn" style="font-size: 20px; width: 300px; height: 50px;"/>
             <ui:Button text="Main Menu" name="MainMenu_btn" style="white-space: pre; -unity-text-align: middle-center; height: 50px; width: 300px; font-size: 20px;"/>
+            <ui:Button text="Boot Strapper" name="BootStrapper_Btn" style="white-space: pre; -unity-text-align: middle-center; height: 50px; width: 300px; font-size: 20px;"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

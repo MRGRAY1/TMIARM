@@ -1,76 +1,149 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
-[RequireComponent(typeof(UIDocument))]
 public class UIManager : MonoBehaviour
 {
-    UIDocument document;
 
-    UIView currentView;
-    UIView previousView;
+    [Header("UI Documents")]
+    [SerializeField] private UIDocument mainMenuDocument;
+    [SerializeField] private UIDocument settingsDocument;
+    [SerializeField] private UIDocument pauseMenuDocument;
+    [SerializeField] private UIDocument overlayHUDDocument;
 
-    MainMenuUI mainMenuView;
-    SettingsMenuUI settingsMenuView;
+    // Modal stack
+    private Stack<UIView> modalStack = new Stack<UIView>();
 
-    void OnEnable()
+    // Overlay elements (HUD)
+    private Dictionary<string, UIView> overlays = new Dictionary<string, UIView>();
+
+    // Scene-specific container (optional parent for scene panels)
+    private Transform sceneUIContainer;
+
+    // UIViews
+    private MainMenuUI mainMenuView;
+    private SettingsMenuUI settingsView;
+    private PauseMenuUI pauseMenuView;
+    private OverlayHUDUI overlayHUDView;
+
+    private void Awake()
     {
-        document = GetComponent<UIDocument>();
+        // Initialize views
         SetupViews();
+    }
 
+    private void SetupViews()
+    {
+        // Main Menu
+        if (mainMenuDocument != null)
+            mainMenuView = new MainMenuUI(mainMenuDocument.rootVisualElement);
+
+        // Settings
+        if (settingsDocument != null)
+            settingsView = new SettingsMenuUI(settingsDocument.rootVisualElement);
+
+        // Pause Menu
+        if (pauseMenuDocument != null)
+            pauseMenuView = new PauseMenuUI(pauseMenuDocument.rootVisualElement);
+
+        // Overlay HUD
+        if (overlayHUDDocument != null)
+        {
+            overlayHUDView = new OverlayHUDUI(overlayHUDDocument.rootVisualElement);
+            overlays.Add("HUD", overlayHUDView);
+            overlayHUDView.Show(); // always visible
+        }
+
+        // Hide modals at start
+        settingsView?.Hide();
+        pauseMenuView?.Hide();
+    }
+
+    private void OnEnable()
+    {
+        // Subscribe to events
+        GameEvents.HomeScreenShown += ShowMainMenu;
         GameEvents.SettingsScreenShown += ShowSettings;
-        GameEvents.SettingsScreenHidden += HideSettings;
-        GameEvents.PlayGamePressed += StartGame;
-        GameEvents.ExitPressed += ExitGame;
-
-        ShowMainMenu();
+        GameEvents.SettingsScreenHidden += HideCurrentModal;
+        GameEvents.PauseScreenShown += ShowPauseMenu;
+        GameEvents.PauseScreenHidden += HideCurrentModal;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
+        // Unsubscribe
+        GameEvents.HomeScreenShown -= ShowMainMenu;
         GameEvents.SettingsScreenShown -= ShowSettings;
-        GameEvents.SettingsScreenHidden -= HideSettings;
-        GameEvents.PlayGamePressed -= StartGame;
-        GameEvents.ExitPressed -= ExitGame;
+        GameEvents.SettingsScreenHidden -= HideCurrentModal;
+        GameEvents.PauseScreenShown -= ShowPauseMenu;
+        GameEvents.PauseScreenHidden -= HideCurrentModal;
     }
 
-    void SetupViews()
+    #region Modal Stack Methods
+
+    // Show a modal screen
+    private void ShowModal(UIView view)
     {
-        var root = document.rootVisualElement;
+        if (view == null) return;
 
-        mainMenuView = new MainMenuUI(root.Q("MainMenuScreen"));
-        settingsMenuView = new SettingsMenuUI(root.Q("SettingsScreen"));
+        // Hide current top modal
+        if (modalStack.Count > 0)
+            modalStack.Peek().Hide();
+
+        modalStack.Push(view);
+        view.Show();
     }
 
-    void ShowMainMenu()
+    // Hide current modal
+    private void HideCurrentModal()
     {
-        currentView?.Hide();
-        currentView = mainMenuView;
-        currentView.Show();
+        if (modalStack.Count == 0) return;
+
+        var top = modalStack.Pop();
+        top.Hide();
+
+        // Show previous modal if exists
+        if (modalStack.Count > 0)
+            modalStack.Peek().Show();
     }
 
-    void ShowSettings()
+    #endregion
+
+    #region Event Handlers
+
+    private void ShowMainMenu()
     {
-        previousView = currentView;
-        currentView.Hide();
-        currentView = settingsMenuView;
-        currentView.Show();
+        ShowModal(mainMenuView);
     }
 
-    void HideSettings()
+    private void ShowSettings()
     {
-        currentView.Hide();
-        currentView = previousView;
-        currentView.Show();
+        ShowModal(settingsView);
     }
 
-    void StartGame()
+    private void ShowPauseMenu()
     {
-        SceneManager.LoadScene("GameScene");
+        ShowModal(pauseMenuView);
     }
 
-    void ExitGame()
+    #endregion
+
+    #region Scene UI
+
+    // Optionally instantiate scene-specific UI under a container
+    public void RegisterSceneUI(UIView view)
     {
-        Application.Quit();
+        if (view == null) return;
+        view.Show();
     }
+
+    public void UnregisterSceneUI(UIView view)
+    {
+        if (view == null) return;
+        view.Hide();
+    }
+
+    #endregion
 }

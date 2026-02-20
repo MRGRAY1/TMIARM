@@ -2,23 +2,20 @@ using UnityEngine.UIElements;
 
 public class SettingsMenuUI : UIView
 {
-    Button backButton;
+    Button MainMenuBtn;
 
     public SettingsMenuUI(VisualElement root) : base(root) { }
 
     protected override void RegisterCallbacks()
     {
-        backButton = root.Q<Button>("BackButton");
-        backButton.clicked += OnBack;
-    }
-
-    void OnBack()
-    {
-        GameEvents.SettingsScreenHidden?.Invoke();
+        MainMenuBtn = root.Q<Button>("MainMenuBtn");
+        MainMenuBtn.clicked += OnBackClicked;
     }
 
     protected override void UnregisterCallbacks()
     {
-        backButton.clicked -= OnBack;
+        MainMenuBtn.clicked -= OnBackClicked;
     }
+
+    void OnBackClicked() => GameEvents.SettingsScreenHidden?.Invoke();
 }

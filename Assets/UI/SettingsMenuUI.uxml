@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/settingsMenu.uss?fileID=7433441132597879392&amp;guid=24a04fe45f3b4c044adef15572ee1d65&amp;type=3#settingsMenu" />
+    <Style src="project://database/Assets/UI/settingsMenu.uss?fileID=7433441132597879392&amp;guid=24a04fe45f3b4c044adef15572ee1d65&amp;type=3#settingsMenu"/>
     <ui:VisualElement picking-mode="Ignore" style="flex-grow: 1; justify-content: flex-start; align-items: center; background-color: rgb(52, 76, 91);">
-        <ui:Label text="Settings Menu" class="label" />
-        <ui:Button text="Main Menu" class="button" />
+        <ui:Label text="Settings Menu" class="label"/>
+        <ui:Button text="Main Menu" name="MainMenuBtn" class="button"/>
     </ui:VisualElement>
 </ui:UXML>

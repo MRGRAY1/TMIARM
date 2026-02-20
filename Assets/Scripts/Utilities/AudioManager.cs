@@ -7,6 +7,9 @@ public class AudioManager : MonoBehaviour
     public AudioSource musicSource;
     public AudioSource sfxSource;
 
+    void Awake()
+    {
+    }
     public void PlayMusic(AudioClip clip)
     {
         musicSource.clip = clip;

@@ -11,6 +11,8 @@ public static class GameEvents
     public static Action OpenMenu;
     public static Action OpenInventory;
     public static Action ExitPressed;
+    public static Action PauseScreenShown;
+    public static Action PauseScreenHidden;
 
     public static Action<string> CurrentViewChanged;
 
@@ -20,4 +22,7 @@ public static class GameEvents
     public static Action Dash;
     public static Action Sprint;
     public static Action Interact;
+
+    // Game Management
+    public static Action<GameState> GameStateChanged;
 }
