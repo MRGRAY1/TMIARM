@@ -119,37 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &435736498 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8714591884633364101, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
-  m_PrefabInstance: {fileID: 883291831}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &435736500
+--- !u!114 &209160314 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 435736498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5904ba1b7fd418440bad3ee31d1a680f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ManagersParent
-  GameManager: {fileID: 0}
-  AudioManager: {fileID: 0}
-  UIManager: {fileID: 0}
---- !u!114 &700348868 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1684332666567639513, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3450241210713581529, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
   m_PrefabInstance: {fileID: 883291831}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Script: {fileID: 11500000, guid: 5d0b2fdd4e15e02478062ccafc56ae20, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
 --- !u!1001 &883291831
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -158,18 +138,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 690465620725211780, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
-      propertyPath: settingsDocument
-      value: 
-      objectReference: {fileID: 700348868}
-    - target: {fileID: 784103927458909123, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1946883430814049410, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6699069458473187129, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -215,12 +183,10 @@ PrefabInstance:
       value: Managers
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1978375899012018067, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8714591884633364101, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 435736500}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
 --- !u!1 &999040628
 GameObject:
@@ -251,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6c19846623dfdc448af0aea1ee4cd76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bootstrapper
-  manager: {fileID: 0}
+  manager: {fileID: 209160314}
 --- !u!4 &999040630
 Transform:
   m_ObjectHideFlags: 0

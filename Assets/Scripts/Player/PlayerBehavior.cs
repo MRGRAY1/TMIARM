@@ -16,8 +16,6 @@ public class PlayerBehavior : MonoBehaviour
     // Declare fields, constants, and serialized variables here.
     [Header("References")]
     [SerializeField]
-    private InputManager playerInput;
-    [SerializeField]
     private float moveSpeed = 7.0f;
     //[SerializeField]
     //private float rotateSpeed = 10.0f;
@@ -57,11 +55,11 @@ public class PlayerBehavior : MonoBehaviour
         playerTransform = transform;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true; // prevents tipping over
-        GameEvents.Jump += PlayerJump;
-        GameEvents.Interact += InteractWithObject;
+        GameEvents.PlayerJump += PlayerJump;
+        GameEvents.PlayerInteract += InteractWithObject;
     }
 
-    private void PlayerJump()
+    private void PlayerJump(object sender)
     {
         if (this.is_grounded)
         {
@@ -69,7 +67,7 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
-    private void InteractWithObject()
+    private void InteractWithObject(object sender)
     {
         RaycastHit hit;
         Logger.Log("Key Pressed");
@@ -103,8 +101,8 @@ public class PlayerBehavior : MonoBehaviour
     // Unsubscribe from events or clean up.
     private void OnDisable()
     {
-        GameEvents.Jump -= PlayerJump;
-        GameEvents.Interact -= InteractWithObject;
+        GameEvents.PlayerJump -= PlayerJump;
+        GameEvents.PlayerInteract -= InteractWithObject;
     }
 
     // Called once per frame.
@@ -121,7 +119,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 inputVector = playerInput.GetMovementVectorNormalized();
+        Vector2 inputVector = Managers.Instance.InputManager.GetMovementVectorNormalized();
 
         Vector3 forward = playerTransform.forward;
         Vector3 right = playerTransform.right;

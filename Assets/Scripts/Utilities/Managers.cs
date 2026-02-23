@@ -7,31 +7,32 @@ public class Managers : MonoBehaviour
     public GameManager GameManager;
     public AudioManager AudioManager;
     public UIManager UIManager;
+    public InputManager InputManager;
 
     // UIManager Awake
     void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
         Instance = this;
 
-        // Make the root Managers GameObject persistent
-        DontDestroyOnLoad(transform.root.gameObject);
-        if (GameManager == null)
-        {
-            GameManager = gameObject.GetComponent<GameManager>();
+        DontDestroyOnLoad(gameObject);
+        Initialize();
+    }
 
-        }
+    private void Initialize()
+    {
+        if (GameManager == null)
+            GameManager = GetComponentInChildren<GameManager>();
         if (AudioManager == null)
-        {
-            AudioManager = gameObject.GetComponent<AudioManager>();
-        }
+            AudioManager = GetComponentInChildren<AudioManager>();
         if (UIManager == null)
-        {
-            UIManager = gameObject.GetComponent<UIManager>();
-        }
+            UIManager = GetComponentInChildren<UIManager>();
+        if (InputManager == null)
+            InputManager = GetComponentInChildren<InputManager>();
+        GameManager.SetState(GameState.Loading);
     }
 }

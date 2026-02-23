@@ -1,7 +1,9 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="DebugOverlayDocument" src="project://database/Assets/UI/DebugOverlayDocument.uxml?fileID=9197481963319205126&amp;guid=10e131b7498cc3f4ca690452edcba885&amp;type=3#DebugOverlayDocument"/>
     <Style src="project://database/Assets/UI/settingsMenu.uss?fileID=7433441132597879392&amp;guid=24a04fe45f3b4c044adef15572ee1d65&amp;type=3#settingsMenu"/>
     <ui:VisualElement picking-mode="Ignore" style="flex-grow: 1; justify-content: flex-start; align-items: center; background-color: rgb(52, 76, 91);">
         <ui:Label text="Settings Menu" class="label"/>
-        <ui:Button text="Main Menu" name="MainMenuBtn" class="button"/>
+        <ui:Button text="Back" name="BackBtn" class="button"/>
     </ui:VisualElement>
+    <ui:Instance template="DebugOverlayDocument" name="DebugDocument" enabled="true" picking-mode="Ignore" style="display: flex;"/>
 </ui:UXML>

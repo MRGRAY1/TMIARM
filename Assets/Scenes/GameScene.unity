@@ -3033,54 +3033,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!1 &1601918470
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1601918472}
-  - component: {fileID: 1601918471}
-  m_Layer: 0
-  m_Name: GameInput
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1601918471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1601918470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5435bb810e42b534587df274dde40c99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InputManager
-  _menuEvent: 6
-  _jumpEvent: 2
-  _interactEvent: 5
-  _inventoryEvent: 7
---- !u!4 &1601918472
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1601918470}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1817814935
 GameObject:
   m_ObjectHideFlags: 0
@@ -4069,7 +4021,7 @@ PrefabInstance:
     - target: {fileID: 7488070352443192033, guid: c5b6b163a4c4bf84197c7ee2ecd10036, type: 3}
       propertyPath: playerInput
       value: 
-      objectReference: {fileID: 1601918471}
+      objectReference: {fileID: 8696808079781086271}
     - target: {fileID: 7488070352443192033, guid: c5b6b163a4c4bf84197c7ee2ecd10036, type: 3}
       propertyPath: groundLayerMask.m_Bits
       value: 64
@@ -4354,6 +4306,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
+--- !u!114 &8696808079781086271 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4869164654860607956, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
+  m_PrefabInstance: {fileID: 8696808079781086270}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5435bb810e42b534587df274dde40c99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputManager
 --- !u!1001 &9062500017380500184
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4418,7 +4381,6 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 200190928549556203}
-  - {fileID: 1601918472}
   - {fileID: 330585546}
   - {fileID: 1198783369}
   - {fileID: 9062500017380500184}

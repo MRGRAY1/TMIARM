@@ -3,26 +3,34 @@ using UnityEngine;
 
 public static class GameEvents
 {
+    // Receiev object for debugging purposes
     // Menu Events
-    public static Action HomeScreenShown;
-    public static Action SettingsScreenShown;
-    public static Action SettingsScreenHidden;
-    public static Action PlayGamePressed;
-    public static Action OpenMenu;
-    public static Action OpenInventory;
-    public static Action ExitPressed;
-    public static Action PauseScreenShown;
-    public static Action PauseScreenHidden;
+    public static Action<object> HomeScreenShown;
+    public static Action<object> SettingsScreenShown;
+    public static Action<object> SettingsScreenHidden;
+    public static Action<object> PlayGamePressed;
+    public static Action<object> OpenMenu;
+    public static Action<object> OpenInventory;
+    public static Action<object> ExitPressed;
+    public static Action<object, string> NotificationMessage;
 
-    public static Action<string> CurrentViewChanged;
 
-    // Game Events
-    public static Action Movement;
-    public static Action Jump;
-    public static Action Dash;
-    public static Action Sprint;
-    public static Action Interact;
+    public static Action<object, string> CurrentViewChanged;
 
-    // Game Management
-    public static Action<GameState> GameStateChanged;
+    // Player Events
+    public static Action<object> PlayerMovement;
+    public static Action<object> PlayerJump;
+    public static Action<object> PlayerDash;
+    public static Action<object> PlayerSprint;
+    public static Action<object> PlayerInteract;
+
+    // Game Manager Events 
+    // ONLY GAME MANAGER EVENTS!!!!
+    public static Action<object, GameState> GameStateChanged;
+    public static Action<object, GameScenes> GameSceneChanged;
+    public static Action<object, bool> TogglePause;
+
+    // Debug Events
+    public static Action<object, string> DebugNotificationMessage;
+    public static Action<object> ToggleDebugOverlay;
 }

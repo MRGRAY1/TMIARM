@@ -7,8 +7,13 @@ public class AudioManager : MonoBehaviour
     public AudioSource musicSource;
     public AudioSource sfxSource;
 
-    void Awake()
+    private bool initialized = false;
+
+    private void Awake()
     {
+        if (initialized) return;
+        initialized = true;
+
     }
     public void PlayMusic(AudioClip clip)
     {

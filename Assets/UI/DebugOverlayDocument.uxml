@@ -1,0 +1,8 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/DebugOverlayScreen.uss?fileID=7433441132597879392&amp;guid=284aa22f11c45a84bbe04f82389d3b8c&amp;type=3#DebugOverlayScreen"/>
+    <ui:VisualElement picking-mode="Ignore" enabled="true" name="DebugBox" style="flex-grow: 1; flex-direction: column; position: absolute; top: auto; left: 29px; align-content: auto; align-self: flex-start; width: 1737px; height: 116px; bottom: 24px;">
+        <ui:Label text="Game State: " name="GameState_Lbl" picking-mode="Ignore" class="debugLabel"/>
+        <ui:Label text="Game Scene: " name="GameScene_lbl" picking-mode="Ignore" class="debugLabel"/>
+        <ui:Label text="Input Mappings:" name="InputMappings_lbl" picking-mode="Ignore" class="debugLabel"/>
+    </ui:VisualElement>
+</ui:UXML>

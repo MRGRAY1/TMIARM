@@ -1,0 +1,6 @@
+:root {
+}
+
+.debugLabel {
+    font-size: 20px;
+}

@@ -1,82 +1,93 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
 public class InputManager : MonoBehaviour
 {
-    private PlayerInputSystem player_Inputs;
+    private PlayerInputSystem playerInputs;
 
-    private Vector2 inputVector = new Vector2(0, 0);
-    [SerializeField]
-    private EventIndex _menuEvent;
-    [SerializeField]
-    private EventIndex _jumpEvent;
-    [SerializeField]
-    private EventIndex _interactEvent;
-    [SerializeField]
-    private EventIndex _inventoryEvent;
+    public string currentMappings { get; private set; }
 
-    private bool IsMenuOpen;
+    [SerializeField] private Managers managers;
 
     private void Awake()
     {
-        player_Inputs = new PlayerInputSystem();
-        player_Inputs.Main.Menu.performed += MenuEvent;
-        player_Inputs.Main.Jump.started += JumpEvent;
-        player_Inputs.Main.Interaction.started += InteractionEvent;
-        player_Inputs.Main.Inventory.started += InventoryEvent;
+        currentMappings = "temp";
 
+        playerInputs = new PlayerInputSystem();
 
+        // Gameplay inputs
+        playerInputs.Main.Jump.started += ctx => GameEvents.PlayerJump?.Invoke(this);
+        playerInputs.Main.Interaction.started += ctx => GameEvents.PlayerInteract?.Invoke(this);
+        playerInputs.Main.Inventory.started += ctx => GameEvents.OpenInventory?.Invoke(this);
+
+        // Menu button (ESC / Start)
+        playerInputs.Main.Menu.started += ctx => Managers.Instance.GameManager.TogglePause();
+        playerInputs.UI.Cancel.started += ctx => Managers.Instance.GameManager.TogglePause();
+
+        //Testing
+        playerInputs.Debug_Always_Active.Test.started += ctx => GameEvents.NotificationMessage?.Invoke(this, "Test Notification from InputManager!");
+        playerInputs.Debug_Always_Active.ToggleOverlay.started += ctx => GameEvents.ToggleDebugOverlay?.Invoke(this);
     }
 
-    private void InventoryEvent(InputAction.CallbackContext context)
-    {
-        GameEvents.OpenInventory?.Invoke();
 
-    }
 
-    private void InteractionEvent(InputAction.CallbackContext context)
+    private void OnEnable()
     {
-        GameEvents.Interact?.Invoke();
-    }
+        // Start with everything disabled and then enable the proper map
+        playerInputs.Disable();
+        playerInputs.Debug_Always_Active.Enable();
+        GameEvents.GameStateChanged += OnGameStateChanged;
 
-    private void JumpEvent(InputAction.CallbackContext context)
-    {
-        GameEvents.Jump?.Invoke();
-    }
-
-    private void MenuEvent(InputAction.CallbackContext context)
-    {
-        if (!IsMenuOpen)
+        // Apply the correct action-map for the current game state immediately
+        if (Managers.Instance != null && Managers.Instance.GameManager != null)
         {
-            player_Inputs.Main.Disable();
-            //player_Inputs.UI.Enable();
+            OnGameStateChanged(this, Managers.Instance.GameManager.CurrentState);
         }
-        else
-        {
-            player_Inputs.Main.Enable();
-            //player_Inputs.UI.Disable();
-        }
-        IsMenuOpen = !IsMenuOpen;
-        GameEvents.OpenMenu?.Invoke();
+    }
 
+    private void OnDisable()
+    {
+        GameEvents.GameStateChanged -= OnGameStateChanged;
+        playerInputs.Debug_Always_Active.Disable();
+
+        playerInputs.Disable();
+    }
+
+    private void OnGameStateChanged(object sender, GameState state)
+    {
+        switch (state)
+        {
+            case GameState.Playing:
+                SwitchToMain();
+                break;
+
+            case GameState.Pause:
+            case GameState.InMenu:
+                SwitchToUI();
+                break;
+        }
     }
 
     public Vector2 GetMovementVectorNormalized()
     {
-        inputVector = player_Inputs.Main.Movement.ReadValue<Vector2>();
-        inputVector = inputVector.normalized;
-        return inputVector;
+        if (!playerInputs.Main.enabled)
+            return Vector2.zero;
+
+        return playerInputs.Main.Movement.ReadValue<Vector2>().normalized;
     }
-    private void OnEnable()
+
+    public void SwitchToUI()
     {
-        player_Inputs.Enable();
+        playerInputs.Main.Disable();
+        playerInputs.UI.Enable();
+        currentMappings = "UI";
     }
-    private void OnDisable()
+
+    public void SwitchToMain()
     {
-        player_Inputs.Disable();
+        playerInputs.UI.Disable();
+        playerInputs.Main.Enable();
+        currentMappings = "Main";
     }
 }
