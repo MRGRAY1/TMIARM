@@ -59,7 +59,7 @@ public class PauseMenuUI : UIView
     //
     private void OnMenuClicked()
     {
-        Managers.Instance.GameManager.SetSceneChange(this, GameScenes.Menu);
+        Managers.Instance.GameManager.SetState(GameState.MainMenu);
 
     }
 

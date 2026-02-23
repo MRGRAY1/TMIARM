@@ -26,7 +26,8 @@ public class InputManager : MonoBehaviour
         playerInputs.UI.Cancel.started += ctx => Managers.Instance.GameManager.TogglePause();
 
         //Testing
-        playerInputs.Debug_Always_Active.Test.started += ctx => GameEvents.NotificationMessage?.Invoke(this, "Test Notification from InputManager!");
+        playerInputs.Debug_Always_Active.Test.started += ctx => Managers.Instance.GameManager.SetState(GameState.MainMenu);
+        //playerInputs.Debug_Always_Active.Test.started += ctx => GameEvents.NotificationMessage?.Invoke(this, "Test Notification from InputManager!");
         playerInputs.Debug_Always_Active.ToggleOverlay.started += ctx => GameEvents.ToggleDebugOverlay?.Invoke(this);
     }
 
@@ -63,7 +64,7 @@ public class InputManager : MonoBehaviour
                 break;
 
             case GameState.Pause:
-            case GameState.InMenu:
+            case GameState.MainMenu:
                 SwitchToUI();
                 break;
         }

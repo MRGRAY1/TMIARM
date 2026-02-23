@@ -52,9 +52,8 @@ public class MainMenuUI : UIView
 
     private void OnPlayClicked()
     {
-        // Unpause the game if needed
-        UnityEngine.Time.timeScale = 1f;
-        Managers.Instance.GameManager.SetSceneChange(this, GameScenes.Game1);
+
+        Managers.Instance.GameManager.StartGame();
     }
 
     private void OnSettingsClicked()

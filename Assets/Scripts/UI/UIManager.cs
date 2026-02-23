@@ -80,7 +80,7 @@ public class UIManager : MonoBehaviour
 
         switch (state)
         {
-            case GameState.InMenu:
+            case GameState.MainMenu:
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 pauseMenuView?.Hide();

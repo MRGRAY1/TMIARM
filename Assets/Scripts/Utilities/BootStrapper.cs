@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 public class Bootstrapper : MonoBehaviour
 {
     [SerializeField] private GameManager manager;
+    [SerializeField]
+    private bool startInMenu = true;
 
     void Awake()
     {
@@ -15,8 +17,15 @@ public class Bootstrapper : MonoBehaviour
             return;
         }
 
-        // set Menu as first scene
-        Managers.Instance.GameManager.SetSceneChange(this, GameScenes.Menu);
+        // set first scene by game state
+        if (startInMenu)
+        {
+            Managers.Instance.GameManager.GoToMainMenu();
+        }
+        else
+        {
+            Managers.Instance.GameManager.StartGame();
+        }
 
     }
 }
