@@ -9,6 +9,11 @@ public class DebugOverlayHUDUI : UIView
 
     public DebugOverlayHUDUI(VisualElement rootElement) : base(rootElement)
     {
+
+    }
+
+    protected override void RegisterCallbacks()
+    {
         // Query labels
         GameState_Lbl = root.Q<Label>("GameState_Lbl");
         GameScene_Lbl = root.Q<Label>("GameScene_lbl");
@@ -23,8 +28,6 @@ public class DebugOverlayHUDUI : UIView
         GameEvents.GameSceneChanged += OnGameSceneChanged;
         GameEvents.ToggleDebugOverlay += ToggleDebugOverlay;
     }
-
-    protected override void RegisterCallbacks() { }
     protected override void UnregisterCallbacks()
     {
         GameEvents.GameStateChanged -= OnGameStateChanged;

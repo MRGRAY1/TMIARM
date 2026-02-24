@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
 
     private void SetupViews()
     {
+        // Initialize UI views
         if (mainMenuDocument != null)
             mainMenuView = new MainMenuUI(mainMenuDocument.rootVisualElement);
 
@@ -39,62 +40,64 @@ public class UIManager : MonoBehaviour
         if (overlayHUDDocument != null)
             overlayHUDView = new OverlayHUDUI(overlayHUDDocument.rootVisualElement);
 
+        // Debug logging
+        if (mainMenuView == null) Logger.Log("UIManager: mainMenuView is null");
+        if (pauseMenuView == null) Logger.Log("UIManager: pauseMenuView is null");
+        if (settingsView == null) Logger.Log("UIManager: settingsView is null");
+        if (overlayHUDView == null) Logger.Log("UIManager: overlayHUDView is null");
     }
 
     private void OnEnable()
     {
-        GameEvents.GameStateChanged += GameStateChanged;
-        GameEvents.HomeScreenShown += ShowMainMenu;
-        GameEvents.SettingsScreenShown += ShowSettings;
-        GameEvents.SettingsScreenHidden += HideCurrentModal;
+        GameEvents.GameStateChanged += OnGameStateChanged;
+        GameEvents.OnSettingsClickedEvent += ShowSettings;
+        GameEvents.OnBackClickedEvent += HideCurrentModal;
     }
 
     private void OnDisable()
     {
-        GameEvents.GameStateChanged -= GameStateChanged;
-        GameEvents.HomeScreenShown -= ShowMainMenu;
-        GameEvents.SettingsScreenShown -= ShowSettings;
-        GameEvents.SettingsScreenHidden -= HideCurrentModal;
+        GameEvents.GameStateChanged -= OnGameStateChanged;
+        GameEvents.OnSettingsClickedEvent -= ShowSettings;
+        GameEvents.OnBackClickedEvent -= HideCurrentModal;
     }
 
-    private void HideAll()
+    private void OnGameStateChanged(object sender, GameState state)
     {
-        mainMenuView?.Hide();
-        pauseMenuView?.Hide();
-        overlayHUDView?.Hide();
-        ClearModals();
-    }
-    private void GameStateChanged(object sender, GameState state)
-    {
-        // Clear modals whenever state changes
+        // Reset all UI
         HideAll();
+        modalStack.Clear();
 
         switch (state)
         {
             case GameState.MainMenu:
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                mainMenuView?.Show();
+                ShowMainMenu(this);
                 break;
 
             case GameState.Playing:
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                overlayHUDView?.Show();
+                ShowOverlay(this);
                 break;
 
             case GameState.Pause:
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                pauseMenuView?.Show();
+                ShowPauseMenu(this);
                 break;
         }
     }
 
     private void ShowModal(UIView view)
     {
-        if (view == null) return;
+        if (view == null)
+        {
+            Logger.Log("UIManager: ShowModal called with null view");
+            return;
+        }
 
+        // Hide previous modal if exists
         if (modalStack.Count > 0)
             modalStack.Peek().Hide();
 
@@ -104,7 +107,8 @@ public class UIManager : MonoBehaviour
 
     private void HideCurrentModal(object sender)
     {
-        if (modalStack.Count == 0) return;
+        if (modalStack.Count == 0)
+            return;
 
         modalStack.Pop().Hide();
 
@@ -112,20 +116,45 @@ public class UIManager : MonoBehaviour
             modalStack.Peek().Show();
     }
 
-    private void ClearModals()
+    private void HideAll()
     {
-        while (modalStack.Count > 0)
-            modalStack.Pop().Hide();
+        mainMenuView?.Hide();
+        pauseMenuView?.Hide();
+        settingsView?.Hide();
+        overlayHUDView?.Hide();
     }
 
     private void ShowMainMenu(object sender)
     {
         ShowModal(mainMenuView);
     }
+    private void ShowOverlay(object sender)
+    {
+        ShowModal(overlayHUDView);
+    }
+    private void ShowPauseMenu(object sender)
+    {
+        ShowModal(pauseMenuView);
+    }
 
     private void ShowSettings(object sender)
     {
-        Logger.Log("UIManager: ShowSettings called, showing settings view.");
-        ShowModal(settingsView);
+        if (settingsView == null)
+        {
+            Logger.Log("UIManager: settingsView is null!");
+            return;
+        }
+
+        // Show settings if either pause menu or main menu is currently active
+        if ((pauseMenuView != null && pauseMenuView.Root.visible) ||
+            (mainMenuView != null && mainMenuView.Root.visible))
+        {
+            Logger.Log("UIManager: Showing settingsView");
+            ShowModal(settingsView);
+        }
+        else
+        {
+            Logger.LogWarning("UIManager: Cannot show Settings unless pause menu or main menu is active");
+        }
     }
 }

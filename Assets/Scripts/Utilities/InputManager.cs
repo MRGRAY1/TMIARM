@@ -22,12 +22,11 @@ public class InputManager : MonoBehaviour
         playerInputs.Main.Inventory.started += ctx => GameEvents.OpenInventory?.Invoke(this);
 
         // Menu button (ESC / Start)
-        playerInputs.Main.Menu.started += ctx => Managers.Instance.GameManager.TogglePause();
-        playerInputs.UI.Cancel.started += ctx => Managers.Instance.GameManager.TogglePause();
+        playerInputs.Player_Always_Active.Cancel.started += ctx => Managers.Instance.GameManager.TogglePause(this);
 
         //Testing
-        playerInputs.Debug_Always_Active.Test.started += ctx => Managers.Instance.GameManager.SetState(GameState.MainMenu);
-        //playerInputs.Debug_Always_Active.Test.started += ctx => GameEvents.NotificationMessage?.Invoke(this, "Test Notification from InputManager!");
+        //playerInputs.Debug_Always_Active.Test.started += ctx => Managers.Instance.GameManager.SetState(GameState.MainMenu);
+        playerInputs.Debug_Always_Active.Test.started += ctx => GameEvents.NotificationMessage?.Invoke(this, "Test Notification from InputManager!");
         playerInputs.Debug_Always_Active.ToggleOverlay.started += ctx => GameEvents.ToggleDebugOverlay?.Invoke(this);
     }
 

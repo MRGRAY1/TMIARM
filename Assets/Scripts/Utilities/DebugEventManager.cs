@@ -11,11 +11,8 @@ public class DebugEventManager : MonoBehaviour
     private void OnEnable()
     {
         eventsFired.Clear();
-        GameEvents.HomeScreenShown += (object sender) => PrintDebug("HomeScreenShown", sender);
-        GameEvents.SettingsScreenShown += (object sender) => PrintDebug("SettingsScreenShown", sender);
-        GameEvents.SettingsScreenHidden += (object sender) => PrintDebug("SettingsScreenHidden", sender);
+        GameEvents.OnSettingsClickedEvent += (object sender) => PrintDebug("OnSettingsClickedEvent", sender);
         GameEvents.PlayGamePressed += (object sender) => PrintDebug("PlayGamePressed", sender);
-        GameEvents.OpenMenu += (object sender) => PrintDebug("OpenMenu", sender);
         GameEvents.OpenInventory += (object sender) => PrintDebug("OpenInventory", sender);
         GameEvents.ExitPressed += (object sender) => PrintDebug("ExitPressed", sender);
         GameEvents.TogglePause += (object sender, bool state) => PrintDebug("TogglePause", sender);
@@ -28,15 +25,16 @@ public class DebugEventManager : MonoBehaviour
         GameEvents.GameStateChanged += (object sender, GameState newState) => PrintDebug($"GameStateChanged {newState.ToString()}", sender);
         GameEvents.GameSceneChanged += (object sender, GameScenes newScene) => PrintDebug($"GameSceneChanged {newScene.ToString()}", sender);
         GameEvents.DebugNotificationMessage += (object sender, string message) => PrintDebug($"DebugNotificationMessage {message}", sender);
+        GameEvents.NotificationMessage += (object sender, string message) => PrintDebug($"NotificationMessage {message}", sender);
         GameEvents.ToggleDebugOverlay += (object sender) => PrintDebug("DebugToggleOverlay", sender);
+        GameEvents.OnBackClickedEvent += (object sender) => PrintDebug("OnBackClickedEvent", sender);
+        GameEvents.PausedPressedEvent += (object sender) => PrintDebug("PausedPressedEvent", sender);
+        GameEvents.GoToMainMenuEvent += (object sender) => PrintDebug("GoToMainMenuEvent", sender);
     }
     private void OnDisable()
     {
-        GameEvents.HomeScreenShown -= (object sender) => PrintDebug("HomeScreenShown", sender);
-        GameEvents.SettingsScreenShown -= (object sender) => PrintDebug("SettingsScreenShown", sender);
-        GameEvents.SettingsScreenHidden -= (object sender) => PrintDebug("SettingsScreenHidden", sender);
+        GameEvents.OnSettingsClickedEvent -= (object sender) => PrintDebug("OnSettingsClickedEvent", sender);
         GameEvents.PlayGamePressed -= (object sender) => PrintDebug("PlayGamePressed", sender);
-        GameEvents.OpenMenu -= (object sender) => PrintDebug("OpenMenu", sender);
         GameEvents.OpenInventory -= (object sender) => PrintDebug("OpenInventory", sender);
         GameEvents.ExitPressed -= (object sender) => PrintDebug("ExitPressed", sender);
         GameEvents.TogglePause -= (object sender, bool state) => PrintDebug("TogglePause", sender);
@@ -50,6 +48,12 @@ public class DebugEventManager : MonoBehaviour
         GameEvents.GameSceneChanged -= (object sender, GameScenes newScene) => PrintDebug("GameSceneChanged", sender);
         GameEvents.DebugNotificationMessage -= (object sender, string message) => PrintDebug($"DebugNotificationMessage {message}", sender);
         GameEvents.ToggleDebugOverlay -= (object sender) => PrintDebug("DebugToggleOverlay", sender);
+        GameEvents.NotificationMessage -= (object sender, string message) => PrintDebug($"NotificationMessage {message}", sender);
+        GameEvents.PausedPressedEvent -= (object sender) => PrintDebug("PausedPressedEvent", sender);
+        GameEvents.OnBackClickedEvent -= (object sender) => PrintDebug("OnBackClickedEvent", sender);
+        GameEvents.GoToMainMenuEvent -= (object sender) => PrintDebug("GoToMainMenuEvent", sender);
+
+
     }
 
 

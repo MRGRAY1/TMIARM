@@ -728,6 +728,45 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Player_Always_Active"",
+            ""id"": ""4e1f2012-4c07-4350-8ea3-2d2ac07a3447"",
+            ""actions"": [
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""5c1e7e1a-f6f9-4abc-aaf9-2a2a585d17a1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""ed5a50c1-6308-49bd-a5e3-00464abce0f6"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a044ee23-4aeb-43ef-94ce-ab9ac27ec6a7"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -754,6 +793,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         m_Debug_Always_Active = asset.FindActionMap("Debug_Always_Active", throwIfNotFound: true);
         m_Debug_Always_Active_ToggleOverlay = m_Debug_Always_Active.FindAction("ToggleOverlay", throwIfNotFound: true);
         m_Debug_Always_Active_Test = m_Debug_Always_Active.FindAction("Test", throwIfNotFound: true);
+        // Player_Always_Active
+        m_Player_Always_Active = asset.FindActionMap("Player_Always_Active", throwIfNotFound: true);
+        m_Player_Always_Active_Cancel = m_Player_Always_Active.FindAction("Cancel", throwIfNotFound: true);
     }
 
     ~@PlayerInputSystem()
@@ -761,6 +803,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_Main.enabled, "This will cause a leak and performance issues, PlayerInputSystem.Main.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, PlayerInputSystem.UI.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Debug_Always_Active.enabled, "This will cause a leak and performance issues, PlayerInputSystem.Debug_Always_Active.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Player_Always_Active.enabled, "This will cause a leak and performance issues, PlayerInputSystem.Player_Always_Active.Disable() has not been called.");
     }
 
     /// <summary>
@@ -1263,6 +1306,102 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="Debug_Always_ActiveActions" /> instance referencing this action map.
     /// </summary>
     public Debug_Always_ActiveActions @Debug_Always_Active => new Debug_Always_ActiveActions(this);
+
+    // Player_Always_Active
+    private readonly InputActionMap m_Player_Always_Active;
+    private List<IPlayer_Always_ActiveActions> m_Player_Always_ActiveActionsCallbackInterfaces = new List<IPlayer_Always_ActiveActions>();
+    private readonly InputAction m_Player_Always_Active_Cancel;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Player_Always_Active".
+    /// </summary>
+    public struct Player_Always_ActiveActions
+    {
+        private @PlayerInputSystem m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public Player_Always_ActiveActions(@PlayerInputSystem wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Player_Always_Active/Cancel".
+        /// </summary>
+        public InputAction @Cancel => m_Wrapper.m_Player_Always_Active_Cancel;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Player_Always_Active; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="Player_Always_ActiveActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(Player_Always_ActiveActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="Player_Always_ActiveActions" />
+        public void AddCallbacks(IPlayer_Always_ActiveActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Player_Always_ActiveActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Player_Always_ActiveActionsCallbackInterfaces.Add(instance);
+            @Cancel.started += instance.OnCancel;
+            @Cancel.performed += instance.OnCancel;
+            @Cancel.canceled += instance.OnCancel;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="Player_Always_ActiveActions" />
+        private void UnregisterCallbacks(IPlayer_Always_ActiveActions instance)
+        {
+            @Cancel.started -= instance.OnCancel;
+            @Cancel.performed -= instance.OnCancel;
+            @Cancel.canceled -= instance.OnCancel;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="Player_Always_ActiveActions.UnregisterCallbacks(IPlayer_Always_ActiveActions)" />.
+        /// </summary>
+        /// <seealso cref="Player_Always_ActiveActions.UnregisterCallbacks(IPlayer_Always_ActiveActions)" />
+        public void RemoveCallbacks(IPlayer_Always_ActiveActions instance)
+        {
+            if (m_Wrapper.m_Player_Always_ActiveActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="Player_Always_ActiveActions.AddCallbacks(IPlayer_Always_ActiveActions)" />
+        /// <seealso cref="Player_Always_ActiveActions.RemoveCallbacks(IPlayer_Always_ActiveActions)" />
+        /// <seealso cref="Player_Always_ActiveActions.UnregisterCallbacks(IPlayer_Always_ActiveActions)" />
+        public void SetCallbacks(IPlayer_Always_ActiveActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Player_Always_ActiveActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Player_Always_ActiveActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="Player_Always_ActiveActions" /> instance referencing this action map.
+    /// </summary>
+    public Player_Always_ActiveActions @Player_Always_Active => new Player_Always_ActiveActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Main" which allows adding and removing callbacks.
     /// </summary>
@@ -1398,5 +1537,20 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTest(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player_Always_Active" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="Player_Always_ActiveActions.AddCallbacks(IPlayer_Always_ActiveActions)" />
+    /// <seealso cref="Player_Always_ActiveActions.RemoveCallbacks(IPlayer_Always_ActiveActions)" />
+    public interface IPlayer_Always_ActiveActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Cancel" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCancel(InputAction.CallbackContext context);
     }
 }

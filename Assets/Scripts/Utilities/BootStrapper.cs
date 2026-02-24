@@ -20,11 +20,11 @@ public class Bootstrapper : MonoBehaviour
         // set first scene by game state
         if (startInMenu)
         {
-            Managers.Instance.GameManager.GoToMainMenu();
+            Managers.Instance.GameManager.GoToMainMenu(this);
         }
         else
         {
-            Managers.Instance.GameManager.StartGame();
+            Managers.Instance.GameManager.StartGame(this);
         }
 
     }

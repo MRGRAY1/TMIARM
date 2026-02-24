@@ -16,10 +16,20 @@ public class GameManager : MonoBehaviour
     {
         CurrentState = GameState.Loading;
         CurrentScene = GameScenes.Loading;
-    }
 
+        GameEvents.PausedPressedEvent += TogglePause;
+        GameEvents.PlayGamePressed += StartGame;
+        GameEvents.GoToMainMenuEvent += GoToMainMenu;
+
+    }
+    private void OnDisable()
+    {
+        GameEvents.PausedPressedEvent -= TogglePause;
+        GameEvents.PlayGamePressed -= StartGame;
+        GameEvents.GoToMainMenuEvent -= GoToMainMenu;
+    }
     #region Pause System
-    public void TogglePause()
+    public void TogglePause(object obj)
     {
         if (CurrentState != GameState.Playing && CurrentState != GameState.Pause)
             return;
@@ -47,7 +57,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Scene & State Management
-    public void StartGame()
+    public void StartGame(object obj)
     {
         // Load game scene only once
         if (!gameSceneLoaded)
@@ -59,7 +69,7 @@ public class GameManager : MonoBehaviour
         SetState(GameState.Playing);
     }
 
-    public void GoToMainMenu()
+    public void GoToMainMenu(object obj)
     {
         SetScene(GameScenes.Menu, MENU_SCENE);
         SetState(GameState.MainMenu);

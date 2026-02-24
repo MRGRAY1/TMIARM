@@ -1,30 +1,22 @@
 using UnityEngine.UIElements;
+using System;
 
 public class SettingsMenuUI : UIView
 {
-    Button BackBtn;
-    private VisualElement debugContainer;
-    private DebugOverlayHUDUI debugOverlayHUD;
+    private Button backButton;
 
-    public SettingsMenuUI(VisualElement root) : base(root)
+    public SettingsMenuUI(VisualElement rootElement) : base(rootElement)
     {
-        debugContainer = root.Q<VisualElement>("DebugDocument");
-        debugOverlayHUD = new DebugOverlayHUDUI(debugContainer);
-
     }
 
     protected override void RegisterCallbacks()
     {
-        BackBtn = root.Q<Button>("BackBtn");
-
-        BackBtn.clicked += OnBackClicked;
+        backButton = root.Q<Button>("BackBtn");
+        backButton.clicked += () => GameEvents.OnBackClickedEvent?.Invoke(this);
     }
 
     protected override void UnregisterCallbacks()
     {
-        BackBtn.clicked -= OnBackClicked;
+        backButton.clicked -= () => GameEvents.OnBackClickedEvent?.Invoke(this);
     }
-
-    void OnBackClicked() => GameEvents.SettingsScreenHidden?.Invoke(this);
-
 }

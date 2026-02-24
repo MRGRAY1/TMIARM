@@ -5,14 +5,14 @@ public static class GameEvents
 {
     // Receiev object for debugging purposes
     // Menu Events
-    public static Action<object> HomeScreenShown;
-    public static Action<object> SettingsScreenShown;
-    public static Action<object> SettingsScreenHidden;
     public static Action<object> PlayGamePressed;
-    public static Action<object> OpenMenu;
     public static Action<object> OpenInventory;
     public static Action<object> ExitPressed;
     public static Action<object, string> NotificationMessage;
+    public static Action<object> OnSettingsClickedEvent;
+    public static Action<object> OnBackClickedEvent;
+    public static Action<object> PausedPressedEvent;
+    public static Action<object> GoToMainMenuEvent;
 
 
     public static Action<object, string> CurrentViewChanged;

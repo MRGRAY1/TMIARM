@@ -18,32 +18,33 @@ public class MainMenuUI : UIView
         settingsButton = root.Q<Button>("SettingsButton");
         exitButton = root.Q<Button>("ExitButton");
 
-        if (playButton != null) playButton.clicked += OnPlayClicked;
-        if (settingsButton != null) settingsButton.clicked += OnSettingsClicked;
-        if (exitButton != null) exitButton.clicked += OnExitClicked;
+        playButton.clicked += OnPlayClicked;
+        settingsButton.clicked += OnSettingsClicked;
+        exitButton.clicked += OnExitClicked;
     }
 
     protected override void UnregisterCallbacks()
     {
-        if (playButton != null) playButton.clicked -= OnPlayClicked;
-        if (settingsButton != null) settingsButton.clicked -= OnSettingsClicked;
-        if (exitButton != null) exitButton.clicked -= OnExitClicked;
+        playButton.clicked -= OnPlayClicked;
+        settingsButton.clicked -= OnSettingsClicked;
+        exitButton.clicked -= OnExitClicked;
 
     }
 
     private void OnPlayClicked()
     {
-        Managers.Instance.GameManager.StartGame();
+        GameEvents.PlayGamePressed?.Invoke(this);
     }
 
     private void OnSettingsClicked()
     {
         Logger.Log("Settings button clicked");
-        GameEvents.SettingsScreenShown?.Invoke(this);
+        GameEvents.OnSettingsClickedEvent?.Invoke(this);
     }
 
     private void OnExitClicked()
     {
         GameEvents.ExitPressed?.Invoke(this);
     }
+
 }

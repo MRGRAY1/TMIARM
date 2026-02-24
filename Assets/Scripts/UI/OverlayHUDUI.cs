@@ -17,11 +17,12 @@ public class OverlayHUDUI : UIView
 
     protected override void RegisterCallbacks()
     {
+        
     }
 
     protected override void UnregisterCallbacks()
     {
-
+        
     }
     // Show a transient notification inside the overlay HUD that slides down from the top,
     // stays for 5 seconds, then slides back up.

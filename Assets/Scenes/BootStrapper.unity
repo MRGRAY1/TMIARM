@@ -130,6 +130,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0b2fdd4e15e02478062ccafc56ae20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+--- !u!114 &853537844 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4226940687498680331, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
+  m_PrefabInstance: {fileID: 883291831}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
 --- !u!1001 &883291831
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -143,9 +154,25 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 690465620725211780, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
+      propertyPath: overlayDoc
+      value: 
+      objectReference: {fileID: 1916817880}
+    - target: {fileID: 690465620725211780, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
       propertyPath: hudDocument
       value: 
       objectReference: {fileID: 1916817880}
+    - target: {fileID: 690465620725211780, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
+      propertyPath: mainMenuDoc
+      value: 
+      objectReference: {fileID: 853537844}
+    - target: {fileID: 690465620725211780, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
+      propertyPath: settingsDoc
+      value: 
+      objectReference: {fileID: 1471254711}
+    - target: {fileID: 690465620725211780, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
+      propertyPath: pauseMenuDoc
+      value: 
+      objectReference: {fileID: 1893684971}
     - target: {fileID: 784103927458909123, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -250,6 +277,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1471254711 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1684332666567639513, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
+  m_PrefabInstance: {fileID: 883291831}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+--- !u!114 &1893684971 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8263855909900142327, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
+  m_PrefabInstance: {fileID: 883291831}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
 --- !u!114 &1916817880 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6542177387171745076, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}

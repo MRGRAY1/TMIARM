@@ -642,6 +642,45 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "Player_Always_Active",
+            "id": "4e1f2012-4c07-4350-8ea3-2d2ac07a3447",
+            "actions": [
+                {
+                    "name": "Cancel",
+                    "type": "Button",
+                    "id": "5c1e7e1a-f6f9-4abc-aaf9-2a2a585d17a1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ed5a50c1-6308-49bd-a5e3-00464abce0f6",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a044ee23-4aeb-43ef-94ce-ab9ac27ec6a7",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
