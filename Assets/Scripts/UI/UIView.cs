@@ -14,7 +14,6 @@ public abstract class UIView
 
     protected abstract void RegisterCallbacks();
     protected abstract void UnregisterCallbacks();
-    public abstract void ToggleDebugOverlay(object obj);
 
     public virtual void Show()
     {

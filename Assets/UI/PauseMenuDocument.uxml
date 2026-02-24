@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="DebugOverlayDocument" src="project://database/Assets/UI/DebugOverlayDocument.uxml?fileID=9197481963319205126&amp;guid=10e131b7498cc3f4ca690452edcba885&amp;type=3#DebugOverlayDocument"/>
-    <Style src="project://database/Assets/UI/PauseMenu.uss?fileID=7433441132597879392&amp;guid=ca63bd980332c3d4698c60c3623a6437&amp;type=3#PauseMenu"/>
+    <Style src="project://database/Assets/UI/USS/PauseMenu.uss?fileID=7433441132597879392&amp;guid=ca63bd980332c3d4698c60c3623a6437&amp;type=3#PauseMenu"/>
     <ui:VisualElement picking-mode="Position" style="flex-grow: 1; background-color: rgb(241, 94, 94); flex-direction: column; align-items: stretch;">
         <ui:VisualElement picking-mode="Ignore" style="flex-grow: 1; height: 662px; flex-direction: column; align-content: auto; position: absolute; width: 1920px;">
             <ui:Label text="Trust Me&#10;Im a Repairman&#10;paused" style="-unity-text-align: upper-center; font-size: 150px;"/>
@@ -11,5 +11,5 @@
             <ui:Button text="Menu" name="Menu_Btn" class="button"/>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:Instance template="DebugOverlayDocument" name="DebugDocument" enabled="true" picking-mode="Ignore" style="display: flex;"/>
+    <ui:Instance template="DebugOverlayDocument" name="DebugDocument" enabled="true" picking-mode="Ignore" style="display: none;"/>
 </ui:UXML>

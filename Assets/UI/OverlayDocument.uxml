@@ -7,5 +7,5 @@
             <ui:Label text="Label" name="NotificationLbl" style="font-size: 60px; -unity-text-align: middle-center; display: flex;"/>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:Instance template="DebugOverlayDocument" name="DebugDocument" enabled="true" picking-mode="Ignore" style="display: flex;"/>
+    <ui:Instance template="DebugOverlayDocument" name="DebugDocument" enabled="true" picking-mode="Ignore" style="display: none;"/>
 </ui:UXML>

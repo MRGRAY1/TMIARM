@@ -138,10 +138,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 574243268827120063, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 690465620725211780, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
       propertyPath: hudDocument
       value: 
       objectReference: {fileID: 1916817880}
+    - target: {fileID: 784103927458909123, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006010944981693596, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6699069458473187129, guid: 10f21b094b27c6d458b7305fc386ad30, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

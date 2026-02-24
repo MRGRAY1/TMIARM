@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    private PlayerInputSystem playerInputs;
+    public PlayerInputSystem playerInputs;
 
     public string currentMappings { get; private set; }
 

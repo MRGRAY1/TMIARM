@@ -11,7 +11,6 @@ public class SettingsMenuUI : UIView
         debugContainer = root.Q<VisualElement>("DebugDocument");
         debugOverlayHUD = new DebugOverlayHUDUI(debugContainer);
 
-        if (debugContainer != null) GameEvents.ToggleDebugOverlay += ToggleDebugOverlay;
     }
 
     protected override void RegisterCallbacks()
@@ -28,11 +27,4 @@ public class SettingsMenuUI : UIView
 
     void OnBackClicked() => GameEvents.SettingsScreenHidden?.Invoke(this);
 
-    public override void ToggleDebugOverlay(object obj)
-    {
-        if (debugContainer.style.display == DisplayStyle.Flex)
-            debugContainer.style.display = DisplayStyle.None;
-        else
-            debugContainer.style.display = DisplayStyle.Flex;
-    }
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -18,9 +18,6 @@ public class UIManager : MonoBehaviour
     private SettingsMenuUI settingsView;
     private PauseMenuUI pauseMenuView;
     private OverlayHUDUI overlayHUDView;
-
-    //[SerializeField]
-    //private DebugScriptableObjects debugOverlaySO;
 
     private void Awake()
     {
@@ -42,11 +39,6 @@ public class UIManager : MonoBehaviour
         if (overlayHUDDocument != null)
             overlayHUDView = new OverlayHUDUI(overlayHUDDocument.rootVisualElement);
 
-        //if (debugOverlaySO.IsDebugOverlayVisible)
-        //{
-        //    GameEvents.ToggleDebugOverlay?.Invoke(this);
-        //}
-
     }
 
     private void OnEnable()
@@ -55,7 +47,6 @@ public class UIManager : MonoBehaviour
         GameEvents.HomeScreenShown += ShowMainMenu;
         GameEvents.SettingsScreenShown += ShowSettings;
         GameEvents.SettingsScreenHidden += HideCurrentModal;
-        GameEvents.ToggleDebugOverlay += ToggleDebugOverlay;
     }
 
     private void OnDisable()
@@ -64,26 +55,25 @@ public class UIManager : MonoBehaviour
         GameEvents.HomeScreenShown -= ShowMainMenu;
         GameEvents.SettingsScreenShown -= ShowSettings;
         GameEvents.SettingsScreenHidden -= HideCurrentModal;
-        GameEvents.ToggleDebugOverlay -= ToggleDebugOverlay;
     }
 
-    private void ToggleDebugOverlay(object obj)
+    private void HideAll()
     {
-        //debugOverlaySO.IsDebugOverlayVisible = !debugOverlaySO.IsDebugOverlayVisible;
+        mainMenuView?.Hide();
+        pauseMenuView?.Hide();
+        overlayHUDView?.Hide();
+        ClearModals();
     }
-
     private void GameStateChanged(object sender, GameState state)
     {
-        // reset everything
+        // Clear modals whenever state changes
         HideAll();
-        modalStack.Clear();
 
         switch (state)
         {
             case GameState.MainMenu:
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                pauseMenuView?.Hide();
                 mainMenuView?.Show();
                 break;
 
@@ -122,12 +112,10 @@ public class UIManager : MonoBehaviour
             modalStack.Peek().Show();
     }
 
-    private void HideAll()
+    private void ClearModals()
     {
-        mainMenuView?.Hide();
-        settingsView?.Hide();
-        pauseMenuView?.Hide();
-        overlayHUDView?.Hide();
+        while (modalStack.Count > 0)
+            modalStack.Pop().Hide();
     }
 
     private void ShowMainMenu(object sender)
@@ -137,6 +125,7 @@ public class UIManager : MonoBehaviour
 
     private void ShowSettings(object sender)
     {
+        Logger.Log("UIManager: ShowSettings called, showing settings view.");
         ShowModal(settingsView);
     }
 }

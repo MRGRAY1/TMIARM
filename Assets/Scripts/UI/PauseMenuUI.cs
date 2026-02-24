@@ -18,7 +18,7 @@ public class PauseMenuUI : UIView
         debugContainer = root.Q<VisualElement>("DebugDocument");
         debugOverlayHUD = new DebugOverlayHUDUI(debugContainer);
 
-        if (debugContainer != null) GameEvents.ToggleDebugOverlay += ToggleDebugOverlay;
+        //if (debugContainer != null) GameEvents.ToggleDebugOverlay += ToggleDebugOverlay;
 
         if (resumeButton == null)
         {
@@ -68,12 +68,5 @@ public class PauseMenuUI : UIView
         resumeButton.clicked -= OnResumeClicked;
         settingsButton.clicked -= OnSettingsClicked;
         menuButton.clicked -= OnMenuClicked;
-    }
-    public override void ToggleDebugOverlay(object obj)
-    {
-        if (debugContainer.style.display == DisplayStyle.Flex)
-            debugContainer.style.display = DisplayStyle.None;
-        else
-            debugContainer.style.display = DisplayStyle.Flex;
     }
 }

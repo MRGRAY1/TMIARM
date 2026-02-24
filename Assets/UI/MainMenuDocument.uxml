@@ -9,5 +9,5 @@
         <ui:Button text="Settings" name="SettingsButton" class="button"/>
         <ui:Button text="Exit" name="ExitButton" class="button"/>
     </ui:VisualElement>
-    <ui:Instance template="DebugOverlayDocument" name="DebugDocument" picking-mode="Ignore" enabled="true" style="display: flex;"/>
+    <ui:Instance template="DebugOverlayDocument" name="DebugDocument" picking-mode="Ignore" enabled="true" style="display: none; visibility: visible;"/>
 </ui:UXML>

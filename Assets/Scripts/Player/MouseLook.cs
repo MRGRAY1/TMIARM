@@ -33,8 +33,7 @@ public class MouseLook : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        playerInputs = new PlayerInputSystem();
-
+        playerInputs = Managers.Instance.InputManager.playerInputs;
         // Update mouse delta when Look input is performed
         playerInputs.Main.Look.performed += ctx => mouseDelta = ctx.ReadValue<Vector2>();
 
@@ -59,6 +58,8 @@ public class MouseLook : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (Managers.Instance.GameManager.CurrentState != GameState.Playing)
+            return;
         // Smooth mouse delta itself
         smoothMouseDelta = Vector2.Lerp(smoothMouseDelta, mouseDelta, mouseSmoothing);
 

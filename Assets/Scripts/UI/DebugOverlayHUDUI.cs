@@ -1,17 +1,11 @@
-using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class DebugOverlayHUDUI : UIView
 {
-    // Debug labels
     private Label GameState_Lbl;
     private Label GameScene_Lbl;
     private Label InputMappings_Lbl;
-
-    private string CurrGameState;
-    private string CurrGameScene;
-    private string CurrInputMappings;
 
     public DebugOverlayHUDUI(VisualElement rootElement) : base(rootElement)
     {
@@ -24,53 +18,34 @@ public class DebugOverlayHUDUI : UIView
         root.pickingMode = PickingMode.Ignore;
         root.focusable = false;
 
-        // Subscribe to game events for updating labels
-        GameEvents.GameSceneChanged += NewGameScene;
-        GameEvents.GameStateChanged += NewGameState;
-        GameEvents.ToggleDebugOverlay += ToggleDebug;
+        // Subscribe to game events
+        GameEvents.GameStateChanged += OnGameStateChanged;
+        GameEvents.GameSceneChanged += OnGameSceneChanged;
+        GameEvents.ToggleDebugOverlay += ToggleDebugOverlay;
     }
 
-    private void ToggleDebug(object obj)
+    protected override void RegisterCallbacks() { }
+    protected override void UnregisterCallbacks()
     {
-        UpdateLabels();
+        GameEvents.GameStateChanged -= OnGameStateChanged;
+        GameEvents.GameSceneChanged -= OnGameSceneChanged;
+        GameEvents.ToggleDebugOverlay -= ToggleDebugOverlay;
     }
 
-    private void NewGameState(object sender, GameState state)
-    {
-        UpdateLabels();
-    }
-
-    private void NewGameScene(object sender, GameScenes scenes)
-    {
-        UpdateLabels();
-    }
+    private void OnGameStateChanged(object sender, GameState state) => UpdateLabels();
+    private void OnGameSceneChanged(object sender, GameScenes scene) => UpdateLabels();
 
     private void UpdateLabels()
     {
-        CurrGameScene = Managers.Instance.GameManager.CurrentScene.ToString();
-        CurrGameState = Managers.Instance.GameManager.CurrentState.ToString();
-        CurrInputMappings = Managers.Instance.InputManager.currentMappings.ToString();
-
-        GameState_Lbl.text = $"Game State: {CurrGameState}";
-        GameScene_Lbl.text = $"Game Scene: {CurrGameScene}";
-        InputMappings_Lbl.text = $"Input Mappings: {CurrInputMappings}";
+        GameState_Lbl.text = $"Game State: {Managers.Instance.GameManager.CurrentState}";
+        GameScene_Lbl.text = $"Game Scene: {Managers.Instance.GameManager.CurrentScene}";
+        InputMappings_Lbl.text = $"Input Mappings: {Managers.Instance.InputManager.currentMappings}";
     }
 
-    protected override void RegisterCallbacks()
+    public void ToggleDebugOverlay(object obj)
     {
-        // No local callbacks needed
-    }
-
-    protected override void UnregisterCallbacks()
-    {
-        // Unsubscribe from events
-        GameEvents.GameSceneChanged -= NewGameScene;
-        GameEvents.GameStateChanged -= NewGameState;
-
-    }
-
-    public override void ToggleDebugOverlay(object obj)
-    {
-        // No-op; visibility is controlled globally by the ScriptableObject
+        root.style.display = root.style.display == DisplayStyle.Flex
+            ? DisplayStyle.None
+            : DisplayStyle.Flex;
     }
 }
