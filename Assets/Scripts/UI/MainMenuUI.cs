@@ -1,50 +1,47 @@
-using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
-public class MainMenuUI : UIView
+public class MainMenuUI
 {
+    public VisualElement root;
+
     private Button playButton;
     private Button settingsButton;
     private Button exitButton;
 
-    public MainMenuUI(VisualElement root) : base(root)
+    public MainMenuUI(VisualElement rootUI)
     {
+        root = rootUI;
+        Initialize();
     }
 
-    protected override void RegisterCallbacks()
+    public void Initialize()
     {
         playButton = root.Q<Button>("PlayGameButton");
         settingsButton = root.Q<Button>("SettingsButton");
         exitButton = root.Q<Button>("ExitButton");
 
-        playButton.clicked += OnPlayClicked;
-        settingsButton.clicked += OnSettingsClicked;
-        exitButton.clicked += OnExitClicked;
+        playButton.clicked += () => UIEvents.PlayGamePressed?.Invoke(this);
+        settingsButton.clicked += () => UIEvents.OnSettingsClickedEvent?.Invoke(this);
+        // exitButton.clicked += () => UIEvents.ExitPressed?.Invoke(this);
+        exitButton.clicked += () => OnButtonClicked("quit");
     }
 
-    protected override void UnregisterCallbacks()
+    public void Show()
     {
-        playButton.clicked -= OnPlayClicked;
-        settingsButton.clicked -= OnSettingsClicked;
-        exitButton.clicked -= OnExitClicked;
-
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        root.style.display = DisplayStyle.Flex;
     }
 
-    private void OnPlayClicked()
+    public void Hide()
     {
-        GameEvents.PlayGamePressed?.Invoke(this);
+        root.style.display = DisplayStyle.None;
     }
 
-    private void OnSettingsClicked()
+    private void OnButtonClicked(string buttonName)
     {
-        Logger.Log("Settings button clicked");
-        GameEvents.OnSettingsClickedEvent?.Invoke(this);
+        Logger.Log($"Button was pressed: {buttonName}");
     }
-
-    private void OnExitClicked()
-    {
-        GameEvents.ExitPressed?.Invoke(this);
-    }
-
 }

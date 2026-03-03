@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,69 +11,62 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string MENU_SCENE = "MainMenu";
     [SerializeField] private string GAME_SCENE = "GameScene";
 
-    private bool gameSceneLoaded = false;
 
     private void Awake()
     {
         CurrentState = GameState.Loading;
         CurrentScene = GameScenes.Loading;
 
-        GameEvents.PausedPressedEvent += TogglePause;
-        GameEvents.PlayGamePressed += StartGame;
-        GameEvents.GoToMainMenuEvent += GoToMainMenu;
-
+        UIEvents.PausedPressedEvent += TogglePause;
+        UIEvents.PlayGamePressed += StartGame;
+        SystemEvents.GoToMainMenuEvent += GoToMainMenu;
     }
+
     private void OnDisable()
     {
-        GameEvents.PausedPressedEvent -= TogglePause;
-        GameEvents.PlayGamePressed -= StartGame;
-        GameEvents.GoToMainMenuEvent -= GoToMainMenu;
+        UIEvents.PausedPressedEvent -= TogglePause;
+        UIEvents.PlayGamePressed -= StartGame;
+        SystemEvents.GoToMainMenuEvent -= GoToMainMenu;
     }
+
     #region Pause System
+
     public void TogglePause(object obj)
     {
-        if (CurrentState != GameState.Playing && CurrentState != GameState.Pause)
+        if (CurrentScene != GameScenes.Menu)
             return;
 
-        bool paused = CurrentState != GameState.Pause;
-        SetPause(paused);
+        if (CurrentState == GameState.Playing)
+        {
+            SetState(GameState.Pause);
+        }
+        else if (CurrentState == GameState.Pause)
+        {
+            SetState(GameState.Playing);
+        }
     }
 
-    private void SetPause(bool paused)
-    {
-        if (paused)
-        {
-            CurrentState = GameState.Pause;
-            Time.timeScale = 0f;
-        }
-        else
-        {
-            CurrentState = GameState.Playing;
-            Time.timeScale = 1f;
-        }
-
-        GameEvents.TogglePause?.Invoke(this, paused);
-        GameEvents.GameStateChanged?.Invoke(this.gameObject, CurrentState);
-    }
     #endregion
 
     #region Scene & State Management
+
     public void StartGame(object obj)
     {
-        // Load game scene only once
-        if (!gameSceneLoaded)
-        {
-            SetScene(GameScenes.Game1, GAME_SCENE);
-            gameSceneLoaded = true;
-        }
-
+        StartCoroutine(LoadSceneNextFrame(GAME_SCENE, GameScenes.Game1));
         SetState(GameState.Playing);
     }
 
     public void GoToMainMenu(object obj)
     {
-        SetScene(GameScenes.Menu, MENU_SCENE);
+        // Delay by one frame to ensure UI updates
+        StartCoroutine(LoadSceneNextFrame(MENU_SCENE, GameScenes.Menu));
         SetState(GameState.MainMenu);
+    }
+
+    private IEnumerator LoadSceneNextFrame(string sceneName, GameScenes newScene)
+    {
+        yield return null; // wait one frame
+        SetScene(newScene, sceneName);
     }
 
     private void SetScene(GameScenes newScene, string sceneName)
@@ -81,14 +75,14 @@ public class GameManager : MonoBehaviour
             return; // Already in this scene
 
         CurrentScene = newScene;
-        GameEvents.GameSceneChanged?.Invoke(this.gameObject, newScene);
+        SystemEvents.GameSceneChanged?.Invoke(this.gameObject, newScene);
         SceneManager.LoadScene(sceneName);
     }
 
     public void SetState(GameState newState)
     {
+        Logger.Log($"New State: {newState}");
         CurrentState = newState;
-        GameEvents.GameStateChanged?.Invoke(this.gameObject, CurrentState);
 
         switch (newState)
         {
@@ -104,7 +98,10 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f;
                 break;
         }
+
+        SystemEvents.GameStateChanged?.Invoke(gameObject, newState);
     }
+
     #endregion
 }
 

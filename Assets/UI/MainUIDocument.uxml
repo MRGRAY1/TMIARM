@@ -1,0 +1,12 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="DebugOverlayDocument" src="project://database/Assets/UI/DebugOverlayDocument.uxml?fileID=9197481963319205126&amp;guid=10e131b7498cc3f4ca690452edcba885&amp;type=3#DebugOverlayDocument"/>
+    <ui:Template name="MainMenuDocument" src="project://database/Assets/UI/MainMenuDocument.uxml?fileID=9197481963319205126&amp;guid=791a434cf9104e34d927b7e5c8410c65&amp;type=3#MainMenuDocument"/>
+    <ui:Template name="OverlayDocument" src="project://database/Assets/UI/OverlayDocument.uxml?fileID=9197481963319205126&amp;guid=259f747f40e443642a5061f8e284e7f3&amp;type=3#OverlayDocument"/>
+    <ui:Template name="PauseMenuDocument" src="project://database/Assets/UI/PauseMenuDocument.uxml?fileID=9197481963319205126&amp;guid=a1c651c9509b11845b16e62a8d68d710&amp;type=3#PauseMenuDocument"/>
+    <ui:Template name="SettingsMenuUI" src="project://database/Assets/UI/SettingsMenuUI.uxml?fileID=9197481963319205126&amp;guid=563c8b43d07b3814292ca17f87a4a214&amp;type=3#SettingsMenuUI"/>
+    <ui:Instance template="OverlayDocument" name="Overlay_Doc" picking-mode="Position" enabled="true" style="position: absolute; width: 1920px; height: 1080px; visibility: visible; display: flex;"/>
+    <ui:Instance template="MainMenuDocument" name="MainMenu_Doc" picking-mode="Position" enabled="true" style="position: absolute; width: 1920px; height: 1080px; display: flex;"/>
+    <ui:Instance template="PauseMenuDocument" name="PauseMenu_Doc" picking-mode="Position" enabled="true" style="position: absolute; width: 1920px; height: 1080px; visibility: visible;"/>
+    <ui:Instance template="SettingsMenuUI" name="SettingsMenu_Doc" picking-mode="Position" enabled="true" style="position: absolute; width: 1920px; height: 1080px; visibility: visible; display: flex;"/>
+    <ui:Instance template="DebugOverlayDocument" name="Debug_Doc" picking-mode="Ignore" enabled="false" style="position: absolute; top: 0; left: 0; width: 1920px; height: 1080px;"/>
+</ui:UXML>
