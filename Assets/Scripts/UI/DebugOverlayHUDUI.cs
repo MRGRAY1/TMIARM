@@ -1,54 +1,77 @@
-using UnityEngine;
+using Unity.VisualScripting;
 using UnityEngine.UIElements;
 
-public class DebugOverlayHUDUI : UIView
+public class DebugOverlayHUDUI
 {
-    private Label GameState_Lbl;
-    private Label GameScene_Lbl;
-    private Label InputMappings_Lbl;
+    public VisualElement root;
+    private Label gameStateLabel;
+    private Label gameSceneLabel;
+    private Label inputMappingsLabel;
 
-    public DebugOverlayHUDUI(VisualElement rootElement) : base(rootElement)
+    private bool isDisplayed;
+
+    public DebugOverlayHUDUI(VisualElement rootUI)
     {
-
+        root = rootUI;
+        this.Initialize();
     }
 
-    protected override void RegisterCallbacks()
+    public void Initialize()
     {
-        // Query labels
-        GameState_Lbl = root.Q<Label>("GameState_Lbl");
-        GameScene_Lbl = root.Q<Label>("GameScene_lbl");
-        InputMappings_Lbl = root.Q<Label>("InputMappings_lbl");
+        Show();
 
-        // Make overlay click-through
+        gameStateLabel = root.Q<Label>("GameState_Lbl");
+        gameSceneLabel = root.Q<Label>("GameScene_Lbl");
+        inputMappingsLabel = root.Q<Label>("InputMappings_Lbl");
+
         root.pickingMode = PickingMode.Ignore;
         root.focusable = false;
+        root.BringToFront();
 
-        // Subscribe to game events
-        GameEvents.GameStateChanged += OnGameStateChanged;
-        GameEvents.GameSceneChanged += OnGameSceneChanged;
-        GameEvents.ToggleDebugOverlay += ToggleDebugOverlay;
+        SystemEvents.GameStateChanged += OnGameStateChanged;
+        SystemEvents.GameSceneChanged += OnGameSceneChanged;
+
+        DebugEvents.ToggleDebugOverlay += ToggleOverlay;
     }
-    protected override void UnregisterCallbacks()
+
+    private void ToggleOverlay(object sender)
     {
-        GameEvents.GameStateChanged -= OnGameStateChanged;
-        GameEvents.GameSceneChanged -= OnGameSceneChanged;
-        GameEvents.ToggleDebugOverlay -= ToggleDebugOverlay;
+        if (isDisplayed)
+        {
+            Hide();
+        }
+        else
+        {
+            Show();
+        }
     }
 
-    private void OnGameStateChanged(object sender, GameState state) => UpdateLabels();
-    private void OnGameSceneChanged(object sender, GameScenes scene) => UpdateLabels();
+    public void Show()
+    {
+        isDisplayed = true;
+        root.style.display = DisplayStyle.Flex;
+    }
+
+    public void Hide()
+    {
+        isDisplayed = false;
+        root.style.display = DisplayStyle.None;
+    }
+
+    private void OnGameStateChanged(object sender, GameState state)
+    {
+        UpdateLabels();
+    }
+
+    private void OnGameSceneChanged(object sender, GameScenes scene)
+    {
+        UpdateLabels();
+    }
 
     private void UpdateLabels()
     {
-        GameState_Lbl.text = $"Game State: {Managers.Instance.GameManager.CurrentState}";
-        GameScene_Lbl.text = $"Game Scene: {Managers.Instance.GameManager.CurrentScene}";
-        InputMappings_Lbl.text = $"Input Mappings: {Managers.Instance.InputManager.currentMappings}";
-    }
-
-    public void ToggleDebugOverlay(object obj)
-    {
-        root.style.display = root.style.display == DisplayStyle.Flex
-            ? DisplayStyle.None
-            : DisplayStyle.Flex;
+        gameStateLabel.text = $"State: {Managers.Instance.GameManager.CurrentState}";
+        gameSceneLabel.text = $"Scene: {Managers.Instance.GameManager.CurrentScene}";
+        inputMappingsLabel.text = $"Input: {Managers.Instance.InputManager.currentMappings}";
     }
 }

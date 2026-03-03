@@ -1,22 +1,37 @@
+using UnityEngine;
 using UnityEngine.UIElements;
-using System;
+using Cursor = UnityEngine.Cursor;
 
-public class SettingsMenuUI : UIView
+public class SettingsMenuUI
 {
     private Button backButton;
+    public VisualElement root;
+    public bool isShown;
 
-    public SettingsMenuUI(VisualElement rootElement) : base(rootElement)
+    public SettingsMenuUI(VisualElement rootUI)
     {
+        root = rootUI;
+        Initialize();
     }
 
-    protected override void RegisterCallbacks()
+    public void Initialize()
     {
         backButton = root.Q<Button>("BackBtn");
-        backButton.clicked += () => GameEvents.OnBackClickedEvent?.Invoke(this);
+
+        backButton.clicked += () => UIEvents.OnSettingsClickedEvent?.Invoke(this);
     }
 
-    protected override void UnregisterCallbacks()
+    public void Show()
     {
-        backButton.clicked -= () => GameEvents.OnBackClickedEvent?.Invoke(this);
+        isShown = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        root.style.display = DisplayStyle.Flex;
+    }
+
+    public void Hide()
+    {
+        isShown = false;
+        root.style.display = DisplayStyle.None;
     }
 }

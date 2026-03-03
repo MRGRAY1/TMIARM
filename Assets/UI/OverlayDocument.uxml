@@ -1,11 +1,9 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="DebugOverlayDocument" src="project://database/Assets/UI/DebugOverlayDocument.uxml?fileID=9197481963319205126&amp;guid=10e131b7498cc3f4ca690452edcba885&amp;type=3#DebugOverlayDocument"/>
-    <Style src="project://database/Assets/UI/OverlayScreen.uss?fileID=7433441132597879392&amp;guid=b63b29cbf74e36d4b9ef801380afabd2&amp;type=3#OverlayScreen"/>
-    <ui:VisualElement picking-mode="Ignore" style="flex-grow: 1; flex-direction: column; align-items: auto; justify-content: flex-start; align-content: auto;">
+    <Style src="project://database/Assets/UI/USS/OverlayScreen.uss?fileID=7433441132597879392&amp;guid=b63b29cbf74e36d4b9ef801380afabd2&amp;type=3#OverlayScreen"/>
+    <ui:VisualElement picking-mode="Ignore" name="Overlay__Container" style="flex-grow: 1; flex-direction: column; align-items: auto; justify-content: flex-start; align-content: auto;">
         <ui:VisualElement name="VisualElement" picking-mode="Ignore" style="flex-grow: 1; position: relative; flex-direction: column-reverse; height: 800px; width: 1920px; top: auto; left: auto; align-content: auto; align-items: auto;"/>
         <ui:VisualElement name="NotificationContainer" style="position: absolute; width: 750px; height: 100px; left: 1212px; top: -524px; margin-left: -375px; margin-top: -50px; align-items: center; flex-direction: column; justify-content: center; border-top-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; border-bottom-left-radius: 30px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 9px; border-right-width: 9px; border-bottom-width: 9px; border-left-width: 9px; background-color: rgba(135, 135, 135, 0.62); display: flex;">
             <ui:Label text="Label" name="NotificationLbl" style="font-size: 60px; -unity-text-align: middle-center; display: flex;"/>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:Instance template="DebugOverlayDocument" name="DebugDocument" enabled="true" picking-mode="Ignore" style="display: none;"/>
 </ui:UXML>

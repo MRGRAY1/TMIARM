@@ -1,30 +1,45 @@
+using UnityEngine;
 using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
-public class PauseMenuUI : UIView
+
+public class PauseMenuUI
 {
-    private Button resumeButton;
-    private Button settingsButton;
-    private Button menuButton;
+    Button resumeButton;
+    Button settingsButton;
+    Button menuButton;
 
+    public VisualElement root;
+    public bool isShown;
 
+    public PauseMenuUI(VisualElement rootUI)
+    {
+        root = rootUI;
+        Initialize();
+    }
 
-    public PauseMenuUI(VisualElement rootElement) : base(rootElement)
-    { }
-
-    protected override void RegisterCallbacks()
+    public void Initialize()
     {
         resumeButton = root.Q<Button>("Resume_Btn");
         settingsButton = root.Q<Button>("Settings_Btn");
         menuButton = root.Q<Button>("Menu_Btn");
-        resumeButton.clicked += () => GameEvents.PausedPressedEvent?.Invoke(this);
-        settingsButton.clicked += () => GameEvents.OnSettingsClickedEvent?.Invoke(this);
-        menuButton.clicked += () => GameEvents.GoToMainMenuEvent?.Invoke(this);
+
+        resumeButton.clicked += () => UIEvents.PausedPressedEvent?.Invoke(this);
+        settingsButton.clicked += () => UIEvents.OnSettingsClickedEvent?.Invoke(this);
+        menuButton.clicked += () => SystemEvents.GoToMainMenuEvent?.Invoke(this);
     }
 
-    protected override void UnregisterCallbacks()
+    public void Show()
     {
-        resumeButton.clicked -= () => GameEvents.PausedPressedEvent?.Invoke(this);
-        settingsButton.clicked -= () => GameEvents.OnSettingsClickedEvent?.Invoke(this);
-        menuButton.clicked -= () => GameEvents.GoToMainMenuEvent?.Invoke(this);
+        isShown = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        root.style.display = DisplayStyle.Flex;
+    }
+
+    public void Hide()
+    {
+        isShown = false;
+        root.style.display = DisplayStyle.None;
     }
 }

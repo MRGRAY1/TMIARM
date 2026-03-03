@@ -22,12 +22,12 @@ public class InputManager : MonoBehaviour
         playerInputs.Main.Inventory.started += ctx => GameEvents.OpenInventory?.Invoke(this);
 
         // Menu button (ESC / Start)
-        playerInputs.Player_Always_Active.Cancel.started += ctx => Managers.Instance.GameManager.TogglePause(this);
+        playerInputs.Player_Always_Active.Cancel.started += ctx => UIEvents.PausedPressedEvent(this);
 
         //Testing
         //playerInputs.Debug_Always_Active.Test.started += ctx => Managers.Instance.GameManager.SetState(GameState.MainMenu);
-        playerInputs.Debug_Always_Active.Test.started += ctx => GameEvents.NotificationMessage?.Invoke(this, "Test Notification from InputManager!");
-        playerInputs.Debug_Always_Active.ToggleOverlay.started += ctx => GameEvents.ToggleDebugOverlay?.Invoke(this);
+        playerInputs.Debug_Always_Active.Test.started += ctx => DebugEvents.DebugNotificationMessage?.Invoke(this, "Test Notification from InputManager!");
+        playerInputs.Debug_Always_Active.ToggleOverlay.started += ctx => DebugEvents.ToggleDebugOverlay?.Invoke(this);
     }
 
 
@@ -37,7 +37,7 @@ public class InputManager : MonoBehaviour
         // Start with everything disabled and then enable the proper map
         playerInputs.Disable();
         playerInputs.Debug_Always_Active.Enable();
-        GameEvents.GameStateChanged += OnGameStateChanged;
+        SystemEvents.GameStateChanged += OnGameStateChanged;
 
         // Apply the correct action-map for the current game state immediately
         if (Managers.Instance != null && Managers.Instance.GameManager != null)
@@ -48,7 +48,7 @@ public class InputManager : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.GameStateChanged -= OnGameStateChanged;
+        SystemEvents.GameStateChanged -= OnGameStateChanged;
         playerInputs.Debug_Always_Active.Disable();
 
         playerInputs.Disable();
