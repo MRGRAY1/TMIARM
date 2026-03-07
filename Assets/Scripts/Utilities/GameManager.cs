@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string MENU_SCENE = "MainMenu";
     [SerializeField] private string GAME_SCENE = "GameScene";
 
+    public bool IsPhoneShown { get; set; }
+
 
     private void Awake()
     {

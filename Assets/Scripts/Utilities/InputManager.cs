@@ -20,9 +20,14 @@ public class InputManager : MonoBehaviour
         // Gameplay inputs
         playerInputs.Main.Jump.started += ctx => GameEvents.PlayerJump?.Invoke(this);
         playerInputs.Main.Interaction.started += ctx => GameEvents.PlayerInteract?.Invoke(this);
-        playerInputs.Main.Inventory.started += OpenInventory;
-        playerInputs.Main.Inventory.canceled += CloseInventory;
         playerInputs.Main.Scroll.started += ScrollInventory;
+        playerInputs.Main.One.started += _ => HotBarSelection(0);
+        playerInputs.Main.Two.started += _ => HotBarSelection(1);
+        playerInputs.Main.Three.started += _ => HotBarSelection(2);
+        playerInputs.Main.Four.started += _ => HotBarSelection(3);
+        playerInputs.Main.Five.started += _ => HotBarSelection(4);
+        playerInputs.Main.Six.started += _ => HotBarSelection(5);
+        playerInputs.Main.Phone.started += TogglePhoneOverlay;
 
         // Menu button (ESC / Start)
         playerInputs.Player_Always_Active.Cancel.started += ctx => UIEvents.PausedPressedEvent(this);
@@ -31,6 +36,12 @@ public class InputManager : MonoBehaviour
         //playerInputs.Debug_Always_Active.Test.started += ctx => Managers.Instance.GameManager.SetState(GameState.MainMenu);
         playerInputs.Debug_Always_Active.Test.started += ctx => DebugEvents.DebugNotificationMessage?.Invoke(this, "Test Notification from InputManager!");
         playerInputs.Debug_Always_Active.ToggleOverlay.started += ctx => DebugEvents.ToggleDebugOverlay?.Invoke(this);
+    }
+
+    private void TogglePhoneOverlay(InputAction.CallbackContext obj)
+    {
+        Managers.Instance.GameManager.IsPhoneShown = !Managers.Instance.GameManager.IsPhoneShown;
+        UIEvents.TogglePhoneEvent?.Invoke(this);
     }
 
 
@@ -48,13 +59,6 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void OpenInventory(InputAction.CallbackContext obj)
-    {
-        if (obj.interaction is HoldInteraction)
-        {
-            GameEvents.OpenInventory?.Invoke(this);
-        }
-    }
 
     private void ScrollInventory(InputAction.CallbackContext obj)
     {
@@ -62,9 +66,9 @@ public class InputManager : MonoBehaviour
         UIEvents.PlayerScroll?.Invoke(this, value);
     }
 
-    private void CloseInventory(InputAction.CallbackContext obj)
+    private void HotBarSelection(int value)
     {
-        GameEvents.CloseInventory?.Invoke(this);
+        UIEvents.HotBarSelected?.Invoke(this, (int)value);
     }
 
     private void OnDisable()
@@ -92,7 +96,8 @@ public class InputManager : MonoBehaviour
 
     public Vector2 GetMovementVectorNormalized()
     {
-        if (!playerInputs.Main.enabled)
+        if (!playerInputs.Main.enabled ||
+            Managers.Instance.GameManager.IsPhoneShown)
             return Vector2.zero;
 
         return playerInputs.Main.Movement.ReadValue<Vector2>().normalized;

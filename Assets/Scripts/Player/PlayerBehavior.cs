@@ -13,41 +13,39 @@ using UnityEngine.InputSystem;
 public class PlayerBehavior : MonoBehaviour
 {
     #region Variables
+
     // Declare fields, constants, and serialized variables here.
-    [Header("References")]
-    [SerializeField]
+    [Header("References")] [SerializeField]
     private float moveSpeed = 7.0f;
+
     //[SerializeField]
     //private float rotateSpeed = 10.0f;
     private Transform playerTransform;
     private bool isWalking = false;
-    [SerializeField]
-    private GameObject _playCamera;
+    [SerializeField] private GameObject _playCamera;
     public float camRayCastDist = 3f;
 
-    [SerializeField]
-    private float acceleration = 12f;
-    [SerializeField]
-    private float deceleration = 16f;
+    [SerializeField] private float acceleration = 12f;
+    [SerializeField] private float deceleration = 16f;
 
     private Vector3 currentVelocity;
 
-    [Header("Jumping")]
+    [Header("Jumping")] [SerializeField] private float groundRaycast_Dist = .5f;
 
-    [SerializeField]
-    private float groundRaycast_Dist = .5f;
     [SerializeField, Tooltip("Layer for Ground")]
     private LayerMask groundLayerMask;
-    [SerializeField]
-    private bool is_grounded;
+
+    [SerializeField] private bool is_grounded;
+
     [SerializeField, Tooltip("Jump Force")]
     private float jump_Force = 5f;
-    private Rigidbody rb;
 
+    private Rigidbody rb;
 
     #endregion
 
     #region Functions
+
     // Called before Start().
     // Initialize references and set up components.
     private void Awake()
@@ -79,22 +77,25 @@ public class PlayerBehavior : MonoBehaviour
                 Logger.Log("Object Hit");
                 interactable.Interact();
             }
-        }
 
+            if (hit.collider.TryGetComponent<NpcInteractions>(out var npc))
+            {
+                Logger.Log("NPC Hit");
+                npc.Interact();
+            }
+        }
     }
 
     // Called before the first frame update.
     // Run startup logic that depends on other objects being initialized.
     private void Start()
     {
-
     }
 
     // Called each time the object becomes enabled and active.
     // Subscribe to events or reset state here.
     private void OnEnable()
     {
-
     }
 
     // Called when the object is disabled or destroyed.

@@ -3,10 +3,12 @@
     <ui:Template name="MainMenuDocument" src="project://database/Assets/UI/MainMenuDocument.uxml?fileID=9197481963319205126&amp;guid=791a434cf9104e34d927b7e5c8410c65&amp;type=3#MainMenuDocument"/>
     <ui:Template name="OverlayDocument" src="project://database/Assets/UI/OverlayDocument.uxml?fileID=9197481963319205126&amp;guid=259f747f40e443642a5061f8e284e7f3&amp;type=3#OverlayDocument"/>
     <ui:Template name="PauseMenuDocument" src="project://database/Assets/UI/PauseMenuDocument.uxml?fileID=9197481963319205126&amp;guid=a1c651c9509b11845b16e62a8d68d710&amp;type=3#PauseMenuDocument"/>
+    <ui:Template name="PhoneUI" src="project://database/Assets/UI/PhoneUI.uxml?fileID=9197481963319205126&amp;guid=585c5e877fac8f44895c956c1bb06285&amp;type=3#PhoneUI"/>
     <ui:Template name="SettingsMenuUI" src="project://database/Assets/UI/SettingsMenuUI.uxml?fileID=9197481963319205126&amp;guid=563c8b43d07b3814292ca17f87a4a214&amp;type=3#SettingsMenuUI"/>
     <ui:Instance template="OverlayDocument" name="Overlay_Doc" picking-mode="Position" enabled="true" style="position: absolute; width: 1920px; height: 1080px; visibility: visible; display: flex;"/>
     <ui:Instance template="MainMenuDocument" name="MainMenu_Doc" picking-mode="Position" enabled="true" style="position: absolute; width: 1920px; height: 1080px; display: flex;"/>
     <ui:Instance template="PauseMenuDocument" name="PauseMenu_Doc" picking-mode="Position" enabled="true" style="position: absolute; width: 1920px; height: 1080px; visibility: visible;"/>
     <ui:Instance template="SettingsMenuUI" name="SettingsMenu_Doc" picking-mode="Position" enabled="true" style="position: absolute; width: 1920px; height: 1080px; visibility: visible; display: flex;"/>
-    <ui:Instance template="DebugOverlayDocument" name="Debug_Doc" picking-mode="Ignore" enabled="false" style="position: absolute; top: 0; left: 0; width: 1920px; height: 1080px;"/>
+    <ui:Instance template="DebugOverlayDocument" name="Debug_Doc" picking-mode="Ignore" enabled="false" style="position: absolute; top: 0; left: 0; width: 1920px; height: 1080px; opacity: 1;"/>
+    <ui:Instance template="PhoneUI" enabled="true" name="Phone_Doc" picking-mode="Ignore" style="width: 500px; height: 600px; position: absolute; top: 240px; left: 710px; right: 710px; bottom: 240px; opacity: 1;"/>
 </ui:UXML>

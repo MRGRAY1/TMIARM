@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     private PauseMenuUI pauseMenuView;
     private OverlayHUDUI overlayHUDView;
     private DebugOverlayHUDUI debugOverlayView;
+    private PhoneMenuUI phoneMenuView;
 
     private VisualElement root;
 
@@ -38,6 +39,8 @@ public class UIManager : MonoBehaviour
         overlayHUDView = new OverlayHUDUI(root.Q<VisualElement>("Overlay_Doc"));
         pauseMenuView = new PauseMenuUI(root.Q<VisualElement>("PauseMenu_Doc"));
         debugOverlayView = new DebugOverlayHUDUI(root.Q<VisualElement>("Debug_Doc"));
+        phoneMenuView = new PhoneMenuUI(root.Q<VisualElement>("Phone_Doc"));
+
 
         HideAll();
     }
@@ -53,6 +56,7 @@ public class UIManager : MonoBehaviour
         SystemEvents.GameStateChanged += GameStateChanged;
         UIEvents.OnSettingsClickedEvent += ToggleSettings;
         UIEvents.PausedPressedEvent += TogglePause;
+        UIEvents.TogglePhoneEvent += TogglePhone;
     }
 
 
@@ -60,6 +64,8 @@ public class UIManager : MonoBehaviour
     {
         SystemEvents.GameStateChanged -= GameStateChanged;
         UIEvents.OnSettingsClickedEvent -= ToggleSettings;
+        UIEvents.PausedPressedEvent -= TogglePause;
+        UIEvents.TogglePhoneEvent -= TogglePhone;
     }
 
     private void GameStateChanged(object arg1, GameState arg2)
@@ -148,6 +154,28 @@ public class UIManager : MonoBehaviour
         overlayHUDView.Hide();
     }
 
+    private void TogglePhone(object obj)
+    {
+        if (phoneMenuView.isShown)
+        {
+            HidePhoneOverlay();
+        }
+        else
+        {
+            ShowPhoneOverlay();
+        }
+    }
+
+    private void ShowPhoneOverlay()
+    {
+        phoneMenuView.Show();
+    }
+
+    private void HidePhoneOverlay()
+    {
+        phoneMenuView.Hide();
+    }
+
 
     private void HideAll()
     {
@@ -155,5 +183,6 @@ public class UIManager : MonoBehaviour
         HideSettings();
         HidePauseMenu();
         HideGameOverlay();
+        HidePhoneOverlay();
     }
 }

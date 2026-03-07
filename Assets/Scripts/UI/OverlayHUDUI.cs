@@ -40,6 +40,7 @@ public class OverlayHUDUI
         root.focusable = false;
         DebugEvents.DebugNotificationMessage += OnNotificationMessage;
         UIEvents.PlayerScroll += ScrollInventory;
+        UIEvents.HotBarSelected += HotBarSelected;
 
         Items.Add(empty_ve);
         Items.Add(wrench_ve);
@@ -49,6 +50,11 @@ public class OverlayHUDUI
         Items.Add(multi_ve);
 
         SetHoveredIndex(0);
+    }
+
+    private void HotBarSelected(object arg1, int arg2)
+    {
+        SetHoveredIndex(arg2);
     }
 
     private void ScrollInventory(object arg1, float arg2)

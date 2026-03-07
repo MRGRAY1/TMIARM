@@ -2,14 +2,13 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    [Header("Sensitivity")]
-    [SerializeField, Tooltip("Mouse X sensitivity (yaw)")]
+    [Header("Sensitivity")] [SerializeField, Tooltip("Mouse X sensitivity (yaw)")]
     private float xSensitivity = 1.5f;
+
     [SerializeField, Tooltip("Mouse Y sensitivity (pitch)")]
     private float ySensitivity = 1.5f;
 
-    [Header("References")]
-    [SerializeField, Tooltip("Transform of the camera for pitch rotation")]
+    [Header("References")] [SerializeField, Tooltip("Transform of the camera for pitch rotation")]
     private Transform cameraTransform;
 
     [Header("Smoothing")]
@@ -27,6 +26,8 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private float mouseSmoothing = 0.08f;
     private Vector2 smoothMouseDelta;
 
+    private bool isPhoneShown = false;
+
 
     /// <summary>
     /// Initialize input callbacks
@@ -36,9 +37,15 @@ public class MouseLook : MonoBehaviour
         playerInputs = Managers.Instance.InputManager.playerInputs;
         // Update mouse delta when Look input is performed
         playerInputs.Main.Look.performed += ctx => mouseDelta = ctx.ReadValue<Vector2>();
+        //UIEvents.TogglePhoneEvent += TogglePhoneLook;
 
         // Reset mouse delta to zero when input stops
         playerInputs.Main.Look.canceled += _ => mouseDelta = Vector2.zero;
+    }
+
+    private void TogglePhoneLook(object obj)
+    {
+        isPhoneShown = !isPhoneShown;
     }
 
     /// <summary>
@@ -48,7 +55,7 @@ public class MouseLook : MonoBehaviour
     {
         playerInputs.Enable();
         Cursor.lockState = CursorLockMode.Locked; // Lock cursor to center
-        Cursor.visible = false;                    // Hide cursor for FPS feel
+        Cursor.visible = false; // Hide cursor for FPS feel
     }
 
     private void OnDisable()
@@ -58,7 +65,8 @@ public class MouseLook : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (Managers.Instance.GameManager.CurrentState != GameState.Playing)
+        if (Managers.Instance.GameManager.CurrentState != GameState.Playing ||
+            Managers.Instance.GameManager.IsPhoneShown)
             return;
         // Smooth mouse delta itself
         smoothMouseDelta = Vector2.Lerp(smoothMouseDelta, mouseDelta, mouseSmoothing);
@@ -73,5 +81,4 @@ public class MouseLook : MonoBehaviour
         cameraTransform.localRotation = Quaternion.Euler(currentRotation.x, 0f, 0f);
         transform.rotation = Quaternion.Euler(0f, currentRotation.y, 0f);
     }
-
 }

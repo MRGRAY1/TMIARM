@@ -16,6 +16,7 @@ public static class GameEvents
 public static class UIEvents
 {
     public static Action<object, int> UpdateItemIndex;
+    public static Action<object, int> HotBarSelected;
     public static Action<object, float> PlayerScroll;
     public static Action<object> PlayGamePressed;
     public static Action<object> ExitPressed;
@@ -24,6 +25,7 @@ public static class UIEvents
     public static Action<object> OnBackClickedEvent;
     public static Action<object> PausedPressedEvent;
     public static Action<object, string> CurrentViewChanged;
+    public static Action<object> TogglePhoneEvent;
 }
 
 public static class SystemEvents

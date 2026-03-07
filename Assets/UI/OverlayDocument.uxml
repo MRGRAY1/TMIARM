@@ -3,33 +3,39 @@
     <ui:VisualElement picking-mode="Ignore" name="Overlay__Container" style="flex-grow: 1; flex-direction: column; align-items: auto; justify-content: flex-start; align-content: auto;">
         <ui:VisualElement name="ItemsBox" picking-mode="Ignore" style="position: relative; flex-direction: row; height: 230px; width: 1600px; top: 826px; left: -175px; align-content: auto; align-items: auto; bottom: -22px; right: 0; background-color: rgba(0, 0, 0, 0.4);">
             <ui:VisualElement name="Empty_Box" class="Element" style="flex-grow: 1; align-items: center; justify-content: center;">
-                <ui:Image source="project://database/Assets/npc_casual_set_00/Textures/npc_hair_01_c.tif?fileID=2800000&amp;guid=59da40feef9b13d4d90965ef03c97589&amp;type=3#npc_hair_01_c" style="height: 200px; width: 200px;">
-                    <ui:Label text="E" name="Label" style="position: relative; left: 24%; font-size: 100px; top: 33px; width: 100px; right: 0; bottom: 0;"/>
+                <ui:Image source="project://database/Assets/npc_casual_set_00/Textures/npc_hair_01_c.tif?fileID=2800000&amp;guid=59da40feef9b13d4d90965ef03c97589&amp;type=3#npc_hair_01_c" style="height: 200px; width: 200px; visibility: visible; flex-direction: column;">
+                    <ui:Label text="E" name="Label" style="position: relative; left: 24%; font-size: 100px; top: 33px; width: 100px; right: 0; bottom: 0; -unity-text-align: middle-center;"/>
+                    <ui:Label text="1" style="-unity-text-align: middle-center; font-size: 42px; color: rgb(0, 0, 0); position: absolute; top: -56px; left: 84px; -unity-font-style: bold;"/>
                 </ui:Image>
             </ui:VisualElement>
             <ui:VisualElement name="Wrench_Box" class="Element" style="flex-grow: 1; align-items: center; justify-content: center;">
                 <ui:Image source="project://database/Assets/npc_casual_set_00/Textures/npc_hair_01_c.tif?fileID=2800000&amp;guid=59da40feef9b13d4d90965ef03c97589&amp;type=3#npc_hair_01_c" style="height: 200px; width: 200px;">
-                    <ui:Label text="W&#10;" style="position: relative; left: 24%; font-size: 100px; top: 33px; width: 100px; right: 0; bottom: 0;"/>
+                    <ui:Label text="W&#10;" style="position: relative; left: 24%; font-size: 100px; top: 33px; width: 100px; right: 0; bottom: 0; -unity-text-align: middle-center;"/>
+                    <ui:Label text="2" style="-unity-text-align: middle-center; font-size: 42px; color: rgb(0, 0, 0); position: absolute; top: -56px; left: 84px; -unity-font-style: bold;"/>
                 </ui:Image>
             </ui:VisualElement>
             <ui:VisualElement name="Hammer_Box" class="Element" style="flex-grow: 1; align-items: center; justify-content: center;">
                 <ui:Image source="project://database/Assets/npc_casual_set_00/Textures/npc_hair_01_c.tif?fileID=2800000&amp;guid=59da40feef9b13d4d90965ef03c97589&amp;type=3#npc_hair_01_c" style="height: 200px; width: 200px;">
-                    <ui:Label text="H" style="position: relative; left: 24%; font-size: 100px; top: 33px; width: 100px; right: 0; bottom: 0;"/>
+                    <ui:Label text="H" style="position: relative; left: 24%; font-size: 100px; top: 33px; width: 100px; right: 0; bottom: 0; -unity-text-align: middle-center;"/>
+                    <ui:Label text="3" tabindex="-1" style="-unity-text-align: middle-center; font-size: 42px; color: rgb(0, 0, 0); position: absolute; top: -56px; left: 84px; -unity-font-style: bold;"/>
                 </ui:Image>
             </ui:VisualElement>
             <ui:VisualElement name="SD_Box" class="Element" style="flex-grow: 1; align-items: center; justify-content: center;">
                 <ui:Image source="project://database/Assets/npc_casual_set_00/Textures/npc_hair_01_c.tif?fileID=2800000&amp;guid=59da40feef9b13d4d90965ef03c97589&amp;type=3#npc_hair_01_c" style="height: 200px; width: 200px;">
-                    <ui:Label text="SD" style="position: relative; left: 11%; font-size: 100px; top: 33px; width: 100px; right: 0; bottom: 0;"/>
+                    <ui:Label text="SD" style="position: relative; left: 23%; font-size: 100px; top: 33px; width: 100px; right: 0; bottom: 0; -unity-text-align: middle-center;"/>
+                    <ui:Label text="4" style="-unity-text-align: middle-center; font-size: 42px; color: rgb(0, 0, 0); position: absolute; top: -56px; left: 84px; -unity-font-style: bold;"/>
                 </ui:Image>
             </ui:VisualElement>
             <ui:VisualElement name="Knife_Box" class="Element" style="flex-grow: 1; align-items: center; justify-content: center;">
                 <ui:Image source="project://database/Assets/npc_casual_set_00/Textures/npc_hair_01_c.tif?fileID=2800000&amp;guid=59da40feef9b13d4d90965ef03c97589&amp;type=3#npc_hair_01_c" style="height: 200px; width: 200px;">
-                    <ui:Label text="K" style="position: relative; left: 24%; font-size: 100px; top: 33px; width: 100px; right: 0; bottom: 0;"/>
+                    <ui:Label text="K" style="position: relative; left: 24%; font-size: 100px; top: 33px; width: 100px; right: 0; bottom: 0; -unity-text-align: middle-center;"/>
+                    <ui:Label text="5" style="-unity-text-align: middle-center; font-size: 42px; color: rgb(0, 0, 0); position: absolute; top: -56px; left: 84px; -unity-font-style: bold;"/>
                 </ui:Image>
             </ui:VisualElement>
             <ui:VisualElement name="MultiMeter_Box" class="Element" style="flex-grow: 1; align-items: center; justify-content: center;">
                 <ui:Image source="project://database/Assets/npc_casual_set_00/Textures/npc_hair_01_c.tif?fileID=2800000&amp;guid=59da40feef9b13d4d90965ef03c97589&amp;type=3#npc_hair_01_c" style="height: 200px; width: 200px;">
-                    <ui:Label text="MM" style="position: relative; left: 0%; font-size: 100px; top: 33px; width: 100px; right: 59px; bottom: 0;"/>
+                    <ui:Label text="MM" style="position: relative; left: 24%; font-size: 100px; top: 33px; width: 100px; right: 59px; bottom: 0; -unity-text-align: middle-center;"/>
+                    <ui:Label text="6" style="-unity-text-align: middle-center; font-size: 42px; color: rgb(0, 0, 0); position: absolute; top: -56px; left: 84px; -unity-font-style: bold;"/>
                 </ui:Image>
             </ui:VisualElement>
         </ui:VisualElement>

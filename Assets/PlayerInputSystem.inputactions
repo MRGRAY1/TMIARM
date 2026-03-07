@@ -52,7 +52,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Inventory",
+                    "name": "Phone",
                     "type": "Button",
                     "id": "c6d49110-af99-46ed-b422-9a138f2e227a",
                     "expectedControlType": "",
@@ -65,6 +65,60 @@
                     "type": "Value",
                     "id": "4b5b9dde-44c6-4a5a-a0a0-e0df96dcd2fb",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "One",
+                    "type": "Value",
+                    "id": "8264c626-4387-40f7-8b1e-a18955363a9c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Two",
+                    "type": "Value",
+                    "id": "11e95656-09c2-41a1-ad6b-54d0479f653f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Three",
+                    "type": "Value",
+                    "id": "10eda2a1-86fb-413a-a2a2-28ee72e52ad3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Four",
+                    "type": "Value",
+                    "id": "3b87a4d5-4600-4a87-abf8-7356196698d0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Five",
+                    "type": "Value",
+                    "id": "240037ac-5515-4d40-abb4-141ef4e9c64a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Six",
+                    "type": "Value",
+                    "id": "c8cf2e59-6f2a-4fce-acea-78daed8a00ce",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -287,7 +341,7 @@
                     "interactions": "Hold",
                     "processors": "",
                     "groups": "",
-                    "action": "Inventory",
+                    "action": "Phone",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -299,6 +353,72 @@
                     "processors": "",
                     "groups": "",
                     "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0ccf58d5-32da-4c27-987b-c42ad37859fa",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "One",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8201d504-4dd8-4180-b201-a8c7d0acf050",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Two",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f5fc2442-c6ea-4e5a-8d4c-10d89a22cace",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Three",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "00b2a626-6ca7-4c78-acc6-b74b67d2b15f",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Four",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2bbf493a-6370-447d-bd5a-b1d1de658947",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Five",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ce010810-b4ef-4467-be32-0a7c682107c4",
+                    "path": "<Keyboard>/6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Six",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
