@@ -84,6 +84,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: hammer
       objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: f6d6a7ee92f3d7c4e82b85a4696a77a4, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

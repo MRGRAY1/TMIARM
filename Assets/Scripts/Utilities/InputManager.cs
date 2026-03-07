@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class InputManager : MonoBehaviour
 {
@@ -19,7 +20,9 @@ public class InputManager : MonoBehaviour
         // Gameplay inputs
         playerInputs.Main.Jump.started += ctx => GameEvents.PlayerJump?.Invoke(this);
         playerInputs.Main.Interaction.started += ctx => GameEvents.PlayerInteract?.Invoke(this);
-        playerInputs.Main.Inventory.started += ctx => GameEvents.OpenInventory?.Invoke(this);
+        playerInputs.Main.Inventory.started += OpenInventory;
+        playerInputs.Main.Inventory.canceled += CloseInventory;
+        playerInputs.Main.Scroll.started += ScrollInventory;
 
         // Menu button (ESC / Start)
         playerInputs.Player_Always_Active.Cancel.started += ctx => UIEvents.PausedPressedEvent(this);
@@ -29,7 +32,6 @@ public class InputManager : MonoBehaviour
         playerInputs.Debug_Always_Active.Test.started += ctx => DebugEvents.DebugNotificationMessage?.Invoke(this, "Test Notification from InputManager!");
         playerInputs.Debug_Always_Active.ToggleOverlay.started += ctx => DebugEvents.ToggleDebugOverlay?.Invoke(this);
     }
-
 
 
     private void OnEnable()
@@ -44,6 +46,25 @@ public class InputManager : MonoBehaviour
         {
             OnGameStateChanged(this, Managers.Instance.GameManager.CurrentState);
         }
+    }
+
+    private void OpenInventory(InputAction.CallbackContext obj)
+    {
+        if (obj.interaction is HoldInteraction)
+        {
+            GameEvents.OpenInventory?.Invoke(this);
+        }
+    }
+
+    private void ScrollInventory(InputAction.CallbackContext obj)
+    {
+        float value = obj.ReadValue<Vector2>().y;
+        UIEvents.PlayerScroll?.Invoke(this, value);
+    }
+
+    private void CloseInventory(InputAction.CallbackContext obj)
+    {
+        GameEvents.CloseInventory?.Invoke(this);
     }
 
     private void OnDisable()

@@ -2,7 +2,9 @@
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.Device;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
 public class UIManager : MonoBehaviour
 {
@@ -77,12 +79,6 @@ public class UIManager : MonoBehaviour
             default:
                 break;
         }
-
-        Logger.Log($"MainMenuView: {mainMenuView.root.style.display}");
-        Logger.Log($"SettingsView: {settingsView.root.style.display}");
-        Logger.Log($"PauseView: {pauseMenuView.root.style.display}");
-        Logger.Log($"OverviewView: {overlayHUDView.root.style.display}");
-        Logger.Log($"DebugView: {debugOverlayView.root.style.display}");
     }
 
 
@@ -137,6 +133,8 @@ public class UIManager : MonoBehaviour
 
     private void HidePauseMenu()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         pauseMenuView.Hide();
     }
 

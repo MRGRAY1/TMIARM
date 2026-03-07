@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public GameState CurrentState { get; private set; }
     public GameScenes CurrentScene { get; private set; }
+    public GameItems CurrentItem { get; private set; }
 
     [SerializeField] private string MENU_SCENE = "MainMenu";
     [SerializeField] private string GAME_SCENE = "GameScene";
@@ -16,11 +17,14 @@ public class GameManager : MonoBehaviour
     {
         CurrentState = GameState.Loading;
         CurrentScene = GameScenes.Loading;
+        SetCurrentItem(this, 0);
 
         UIEvents.PausedPressedEvent += TogglePause;
         UIEvents.PlayGamePressed += StartGame;
         SystemEvents.GoToMainMenuEvent += GoToMainMenu;
+        UIEvents.UpdateItemIndex += SetCurrentItem;
     }
+
 
     private void OnDisable()
     {
@@ -33,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     public void TogglePause(object obj)
     {
-        if (CurrentScene != GameScenes.Menu)
+        if (CurrentScene == GameScenes.Menu)
             return;
 
         if (CurrentState == GameState.Playing)
@@ -76,8 +80,10 @@ public class GameManager : MonoBehaviour
 
         CurrentScene = newScene;
         SystemEvents.GameSceneChanged?.Invoke(this.gameObject, newScene);
+        DebugEvents.GameUpdated?.Invoke(this);
         SceneManager.LoadScene(sceneName);
     }
+
 
     public void SetState(GameState newState)
     {
@@ -100,6 +106,35 @@ public class GameManager : MonoBehaviour
         }
 
         SystemEvents.GameStateChanged?.Invoke(gameObject, newState);
+        DebugEvents.GameUpdated?.Invoke(this);
+    }
+
+    private void SetCurrentItem(object arg1, int arg2)
+    {
+        switch (arg2)
+        {
+            case 0:
+                CurrentItem = GameItems.EmptyHanded;
+                break;
+            case 1:
+                CurrentItem = GameItems.Wrench;
+                break;
+            case 2:
+                CurrentItem = GameItems.Hammer;
+                break;
+            case 3:
+                CurrentItem = GameItems.ScrewDriver;
+                break;
+            case 4:
+                CurrentItem = GameItems.Knife;
+                break;
+            case 5:
+                CurrentItem = GameItems.Multimeter;
+                break;
+        }
+
+        GameEvents.UpdateItemInHand?.Invoke(this);
+        DebugEvents.GameUpdated?.Invoke(this);
     }
 
     #endregion
@@ -121,4 +156,14 @@ public enum GameScenes
     Game1,
     EndScene,
     Loading,
+}
+
+public enum GameItems
+{
+    EmptyHanded,
+    Wrench,
+    Hammer,
+    ScrewDriver,
+    Knife,
+    Multimeter
 }

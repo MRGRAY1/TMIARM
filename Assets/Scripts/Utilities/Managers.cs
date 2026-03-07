@@ -17,6 +17,7 @@ public class Managers : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         Instance = this;
 
         DontDestroyOnLoad(gameObject);
@@ -33,6 +34,7 @@ public class Managers : MonoBehaviour
             UIManager = GetComponentInChildren<UIManager>();
         if (InputManager == null)
             InputManager = GetComponentInChildren<InputManager>();
+        CoroutineRunner.Coroutines.Initialize(this);
         GameManager.SetState(GameState.Loading);
     }
 }

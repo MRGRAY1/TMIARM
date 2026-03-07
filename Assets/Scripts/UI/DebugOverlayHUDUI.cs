@@ -7,6 +7,7 @@ public class DebugOverlayHUDUI
     private Label gameStateLabel;
     private Label gameSceneLabel;
     private Label inputMappingsLabel;
+    private Label currentItemLabel;
 
     private bool isDisplayed;
 
@@ -23,15 +24,22 @@ public class DebugOverlayHUDUI
         gameStateLabel = root.Q<Label>("GameState_Lbl");
         gameSceneLabel = root.Q<Label>("GameScene_Lbl");
         inputMappingsLabel = root.Q<Label>("InputMappings_Lbl");
+        currentItemLabel = root.Q<Label>("CurrentItem_Lbl");
 
         root.pickingMode = PickingMode.Ignore;
         root.focusable = false;
         root.BringToFront();
 
-        SystemEvents.GameStateChanged += OnGameStateChanged;
-        SystemEvents.GameSceneChanged += OnGameSceneChanged;
-
+        DebugEvents.GameUpdated += UpdateLabels;
         DebugEvents.ToggleDebugOverlay += ToggleOverlay;
+    }
+
+    private void UpdateLabels(object obj)
+    {
+        gameStateLabel.text = $"State: {Managers.Instance.GameManager.CurrentState}";
+        gameSceneLabel.text = $"Scene: {Managers.Instance.GameManager.CurrentScene}";
+        inputMappingsLabel.text = $"Input: {Managers.Instance.InputManager.currentMappings}";
+        currentItemLabel.text = $"Item: {Managers.Instance.GameManager.CurrentItem}";
     }
 
     private void ToggleOverlay(object sender)
@@ -56,22 +64,5 @@ public class DebugOverlayHUDUI
     {
         isDisplayed = false;
         root.style.display = DisplayStyle.None;
-    }
-
-    private void OnGameStateChanged(object sender, GameState state)
-    {
-        UpdateLabels();
-    }
-
-    private void OnGameSceneChanged(object sender, GameScenes scene)
-    {
-        UpdateLabels();
-    }
-
-    private void UpdateLabels()
-    {
-        gameStateLabel.text = $"State: {Managers.Instance.GameManager.CurrentState}";
-        gameSceneLabel.text = $"Scene: {Managers.Instance.GameManager.CurrentScene}";
-        inputMappingsLabel.text = $"Input: {Managers.Instance.InputManager.currentMappings}";
     }
 }

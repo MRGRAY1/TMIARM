@@ -9,10 +9,14 @@ public static class GameEvents
     public static Action<object> PlayerSprint;
     public static Action<object> PlayerInteract;
     public static Action<object> OpenInventory;
+    public static Action<object> CloseInventory;
+    public static Action<object> UpdateItemInHand;
 }
 
 public static class UIEvents
 {
+    public static Action<object, int> UpdateItemIndex;
+    public static Action<object, float> PlayerScroll;
     public static Action<object> PlayGamePressed;
     public static Action<object> ExitPressed;
     public static Action<object, string> NotificationMessage;
@@ -47,6 +51,7 @@ public static class DebugEvents
 {
     public static Action<object, string> DebugNotificationMessage;
     public static Action<object> ToggleDebugOverlay;
+    public static Action<object> GameUpdated;
 }
 
 public static class SceneEvents

@@ -59,6 +59,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Scroll",
+                    "type": "Value",
+                    "id": "4b5b9dde-44c6-4a5a-a0a0-e0df96dcd2fb",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -275,10 +284,21 @@
                     "name": "",
                     "id": "e0ea683d-d763-4d2a-bbb8-1e6430dc3a33",
                     "path": "<Keyboard>/tab",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "",
                     "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "93b16cb8-0f1d-454d-8f88-fb0463624d6a",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scroll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,4 +1,13 @@
 :root {
 }
 
+.Element {
+}
 
+.Element:hover,
+.Element.hovered {
+    /* your hover styles */
+    border-color: white;
+    border-width: 2px;
+    scale: 1.1;
+}

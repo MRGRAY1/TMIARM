@@ -1,14 +1,35 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class OverlayHUDUI
 {
     public VisualElement root;
+    public VisualElement BoxList_ve;
+
+    public VisualElement empty_ve;
+    public VisualElement wrench_ve;
+    public VisualElement hammer_ve;
+    public VisualElement screwDrive_ve;
+    public VisualElement knife_ve;
+    public VisualElement multi_ve;
+
+    private int itemIndex = 0;
+
+    public List<VisualElement> Items = new List<VisualElement>();
 
     public OverlayHUDUI(VisualElement rootUI)
     {
         root = rootUI;
+
+        BoxList_ve = root.Q<VisualElement>("ItemsBox");
+        empty_ve = BoxList_ve.Q<VisualElement>("Empty_Box");
+        wrench_ve = BoxList_ve.Q<VisualElement>("Wrench_Box");
+        hammer_ve = BoxList_ve.Q<VisualElement>("Hammer_Box");
+        screwDrive_ve = BoxList_ve.Q<VisualElement>("SD_Box");
+        knife_ve = BoxList_ve.Q<VisualElement>("Knife_Box");
+        multi_ve = BoxList_ve.Q<VisualElement>("MultiMeter_Box");
 
         this.Initialize();
     }
@@ -18,6 +39,52 @@ public class OverlayHUDUI
         root.pickingMode = PickingMode.Ignore;
         root.focusable = false;
         DebugEvents.DebugNotificationMessage += OnNotificationMessage;
+        UIEvents.PlayerScroll += ScrollInventory;
+
+        Items.Add(empty_ve);
+        Items.Add(wrench_ve);
+        Items.Add(hammer_ve);
+        Items.Add(screwDrive_ve);
+        Items.Add(knife_ve);
+        Items.Add(multi_ve);
+
+        SetHoveredIndex(0);
+    }
+
+    private void ScrollInventory(object arg1, float arg2)
+    {
+        if (arg2 < 0)
+        {
+            ScrollPrevious();
+        }
+        else
+        {
+            ScrollNext();
+        }
+    }
+
+
+    public void ScrollNext()
+    {
+        SetHoveredIndex((itemIndex + 1) % Items.Count);
+    }
+
+    public void ScrollPrevious()
+    {
+        SetHoveredIndex((itemIndex - 1 + Items.Count) % Items.Count);
+    }
+
+    private void SetHoveredIndex(int index)
+    {
+        // Remove hover from previous
+        if (itemIndex >= 0 && itemIndex < Items.Count)
+            Items[itemIndex].RemoveFromClassList("hovered");
+
+        itemIndex = index;
+
+        // Add hover to new
+        Items[itemIndex].AddToClassList("hovered");
+        UIEvents.UpdateItemIndex?.Invoke(this, itemIndex);
     }
 
     public void Show()

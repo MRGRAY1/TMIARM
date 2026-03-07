@@ -1,0 +1,20 @@
+:root {
+}
+
+
+
+.button {
+    bottom: 0;
+    left: auto;
+    top: 0;
+    flex-direction: column;
+    font-size: 50px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
