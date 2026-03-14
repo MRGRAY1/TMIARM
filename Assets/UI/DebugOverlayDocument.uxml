@@ -6,6 +6,8 @@
             <ui:Label text="Game Scene: " name="GameScene_Lbl" picking-mode="Ignore" class="debugLabel"/>
             <ui:Label text="Input Mappings:" name="InputMappings_Lbl" picking-mode="Ignore" class="debugLabel"/>
             <ui:Label text="Current Item:" name="CurrentItem_Lbl" picking-mode="Ignore" class="debugLabel"/>
+            <ui:Label text="Time Scale:" name="TimeScale_Lbl" picking-mode="Ignore" class="debugLabel"/>
+            <ui:Label text="Delta Time:" name="DeltaTime_Lbl" picking-mode="Ignore" class="debugLabel"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

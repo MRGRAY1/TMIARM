@@ -11,9 +11,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private string MENU_SCENE = "MainMenu";
     [SerializeField] private string GAME_SCENE = "GameScene";
+    [SerializeField] private string LOADING_SCENE = "LoadingScreen";
 
     public bool IsPhoneShown { get; set; }
-
 
     private void Awake()
     {
@@ -25,14 +25,16 @@ public class GameManager : MonoBehaviour
         UIEvents.PlayGamePressed += StartGame;
         SystemEvents.GoToMainMenuEvent += GoToMainMenu;
         UIEvents.UpdateItemIndex += SetCurrentItem;
+        SystemEvents.SceneReadyEvent += OnSceneReady;
     }
-
 
     private void OnDisable()
     {
         UIEvents.PausedPressedEvent -= TogglePause;
         UIEvents.PlayGamePressed -= StartGame;
         SystemEvents.GoToMainMenuEvent -= GoToMainMenu;
+        UIEvents.UpdateItemIndex -= SetCurrentItem;
+        SystemEvents.SceneReadyEvent -= OnSceneReady;
     }
 
     #region Pause System
@@ -56,36 +58,34 @@ public class GameManager : MonoBehaviour
 
     #region Scene & State Management
 
+    private void OnSceneReady(object sender, GameState state)
+    {
+        CurrentScene = state == GameState.MainMenu ? GameScenes.Menu : GameScenes.Game1;
+        SetState(state);
+    }
+
     public void StartGame(object obj)
     {
-        StartCoroutine(LoadSceneNextFrame(GAME_SCENE, GameScenes.Game1));
-        SetState(GameState.Playing);
+        CurrentScene = GameScenes.Loading;
+        SceneLoader.TargetScene = GAME_SCENE;
+        SceneLoader.minimumTime = 5f;
+        StartCoroutine(LoadSceneNextFrame(LOADING_SCENE));
     }
 
     public void GoToMainMenu(object obj)
     {
-        // Delay by one frame to ensure UI updates
-        StartCoroutine(LoadSceneNextFrame(MENU_SCENE, GameScenes.Menu));
-        SetState(GameState.MainMenu);
+        Time.timeScale = 1f;
+        CurrentScene = GameScenes.Loading;
+        SceneLoader.TargetScene = MENU_SCENE;
+        SceneLoader.minimumTime = 0.1f;
+        StartCoroutine(LoadSceneNextFrame(LOADING_SCENE));
     }
 
-    private IEnumerator LoadSceneNextFrame(string sceneName, GameScenes newScene)
+    private IEnumerator LoadSceneNextFrame(string sceneName)
     {
-        yield return null; // wait one frame
-        SetScene(newScene, sceneName);
-    }
-
-    private void SetScene(GameScenes newScene, string sceneName)
-    {
-        if (CurrentScene == newScene)
-            return; // Already in this scene
-
-        CurrentScene = newScene;
-        SystemEvents.GameSceneChanged?.Invoke(this.gameObject, newScene);
-        DebugEvents.GameUpdated?.Invoke(this);
+        yield return null;
         SceneManager.LoadScene(sceneName);
     }
-
 
     public void SetState(GameState newState)
     {

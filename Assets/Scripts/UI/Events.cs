@@ -37,6 +37,7 @@ public static class SystemEvents
     public static Action<object, GameState> GameStateChanged;
     public static Action<object, GameScenes> GameSceneChanged;
     public static Action<object, bool> TogglePause;
+    public static Action<object, GameState> SceneReadyEvent;
 }
 
 public static class AudioEvents

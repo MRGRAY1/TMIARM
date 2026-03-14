@@ -205,6 +205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   MENU_SCENE: MainMenu
   GAME_SCENE: GameScene
+  LOADING_SCENE: LoadingScreen
 --- !u!1 &7453257316217804928
 GameObject:
   m_ObjectHideFlags: 0

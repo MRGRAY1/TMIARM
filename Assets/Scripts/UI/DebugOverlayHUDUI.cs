@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 public class DebugOverlayHUDUI
@@ -8,6 +9,8 @@ public class DebugOverlayHUDUI
     private Label gameSceneLabel;
     private Label inputMappingsLabel;
     private Label currentItemLabel;
+    private Label timeScaleLabel;
+    private Label deltaTimeLabel;
 
     private bool isDisplayed;
 
@@ -25,6 +28,8 @@ public class DebugOverlayHUDUI
         gameSceneLabel = root.Q<Label>("GameScene_Lbl");
         inputMappingsLabel = root.Q<Label>("InputMappings_Lbl");
         currentItemLabel = root.Q<Label>("CurrentItem_Lbl");
+        timeScaleLabel = root.Q<Label>("TimeScale_Lbl");
+        deltaTimeLabel = root.Q<Label>("DeltaTime_Lbl");
 
         root.pickingMode = PickingMode.Ignore;
         root.focusable = false;
@@ -40,6 +45,8 @@ public class DebugOverlayHUDUI
         gameSceneLabel.text = $"Scene: {Managers.Instance.GameManager.CurrentScene}";
         inputMappingsLabel.text = $"Input: {Managers.Instance.InputManager.currentMappings}";
         currentItemLabel.text = $"Item: {Managers.Instance.GameManager.CurrentItem}";
+        timeScaleLabel.text = $"Time Scale: {Time.timeScale}";
+        deltaTimeLabel.text = $"Delta Time: {Time.deltaTime}";
     }
 
     private void ToggleOverlay(object sender)

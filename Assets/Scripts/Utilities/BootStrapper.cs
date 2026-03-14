@@ -5,6 +5,9 @@ public class Bootstrapper : MonoBehaviour
 {
     [SerializeField] private GameManager manager;
     [SerializeField] private bool startInMenu = true;
+    [SerializeField] private string LOADING_SCENE = "LoadingScreen";
+    [SerializeField] private string MENU_SCENE = "MainMenu";
+    [SerializeField] private string GAME_SCENE = "GameScene";
 
     void Awake()
     {
@@ -16,14 +19,15 @@ public class Bootstrapper : MonoBehaviour
             return;
         }
 
-        // set first scene by game state
         if (startInMenu)
         {
-            SystemEvents.GoToMainMenuEvent?.Invoke(this);
+            SceneLoader.TargetScene = MENU_SCENE;
         }
         else
         {
-            UIEvents.PlayGamePressed?.Invoke(this);
+            SceneLoader.TargetScene = GAME_SCENE;
         }
+
+        SceneManager.LoadScene(LOADING_SCENE);
     }
 }
